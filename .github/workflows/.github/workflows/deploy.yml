@@ -1,0 +1,78 @@
+# Ablegen unter: .github/workflows/deploy.yml  (im Frontend-Repo)
+
+name: Build and Deploy Frontend
+
+on:
+  push:
+    branches:
+      - deploy
+
+# Verhindert, dass zwei Deployments gleichzeitig laufen
+concurrency:
+  group: deploy-frontend
+  cancel-in-progress: false
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    outputs:
+      image_name: ${{ steps.vars.outputs.image_name }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # GHCR verlangt Kleinbuchstaben im Image-Namen
+      - name: Compute lowercase image name
+        id: vars
+        run: |
+          echo "image_name=ghcr.io/$(echo '${{ github.repository_owner }}/makeascenefrontend' | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to ghcr.io
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ steps.vars.outputs.image_name }}:latest
+            ${{ steps.vars.outputs.image_name }}:${{ github.sha }}
+          # NEXT_PUBLIC_* Variablen werden von Next.js beim BUILD eingebacken,
+          # daher müssen sie hier als build-args übergeben werden
+          # (und im Dockerfile mit ARG/ENV deklariert sein).
+          build-args: |
+            NEXT_PUBLIC_API_URL=${{ vars.NEXT_PUBLIC_API_URL }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v3
+
+      - name: Configure kubeconfig
+        run: |
+          echo "${{ secrets.KUBECONFIG }}" | base64 -d > kubeconfig.yaml
+          echo "KUBECONFIG=$PWD/kubeconfig.yaml" >> $GITHUB_ENV
+
+      - name: Roll out new image
+        run: |
+          kubectl set image deployment/frontend \
+            frontend=${{ needs.build-and-push.outputs.image_name }}:${{ github.sha }} \
+            -n makeascene
+          kubectl rollout status deployment/frontend -n makeascene --timeout=300s
