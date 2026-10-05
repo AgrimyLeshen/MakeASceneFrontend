@@ -5,7 +5,7 @@ name: Build and Deploy Frontend
 on:
   push:
     branches:
-      - deploy
+      - main
 
 # Verhindert, dass zwei Deployments gleichzeitig laufen
 concurrency:
