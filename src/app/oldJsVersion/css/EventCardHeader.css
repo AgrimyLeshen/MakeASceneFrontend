@@ -1,0 +1,50 @@
+.event-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  border-bottom: 1px solid #eee;
+}
+
+.event-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.event-header-image {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.event-header-title {
+  font-weight: 600;
+  font-size: 1.1em;
+}
+
+.event-header-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.event-header-actions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: inherit;
+}
+
+.event-header-actions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}

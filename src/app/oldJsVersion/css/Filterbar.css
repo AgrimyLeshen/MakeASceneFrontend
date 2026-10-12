@@ -1,0 +1,221 @@
+.filterbar {
+    position: fixed;
+    z-index: 2000;
+    padding: 4px;
+
+    top: 64px;
+    right: 0;
+
+    width: 320px;
+    height: calc(100vh - 64px);
+
+    background: var(--sidebar-bg);
+    color: var(--text);
+
+    display: flex;
+    flex-direction: column;
+
+    border-left: 1px solid var(--outline);
+
+    transform: translateX(100%);
+    transition: transform 0.25s ease;
+}
+
+
+
+/* Open State */
+.filterbar.open {
+    transform: translateX(0);
+}
+
+/* OVERLAY*/
+
+.filterbar-overlay {
+    position: fixed;
+    inset: 0;
+
+    background: var(--shadow);
+    backdrop-filter: blur(1px);
+
+    z-index: 10;
+}
+
+/* CONTENT */
+
+.filterbar-content {
+    flex: 1;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+
+    padding-bottom: 180px;
+}
+
+/* Custom Scrollbar */
+.filterbar-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.filterbar-content::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+}
+
+.filterbar-content::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 999px;
+}
+
+/* HEADER */
+
+.filterbar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 4px;
+}
+
+.filterbar-title {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+
+    color: var(--text-h);
+}
+
+/* SECTION */
+
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: 600;
+
+    color: var(--text-h);
+
+    margin: 0;
+    padding-bottom: 10px;
+
+    border-bottom: 2px solid var(--sidebar-divider);
+}
+
+/* FOLDABLE*/
+
+.foldable {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.foldable-header {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 8px 10px;
+
+    background: transparent;
+
+    border: transparent;
+    border-radius: 12px;
+
+    color: var(--text);
+
+    font-size: 15px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.foldable-header:hover {
+    background: var(--sidebar-hover);
+}
+
+.foldable-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* INPUTS*/
+
+.text-input,
+.date-input {
+    width: 100%;
+    box-sizing: border-box;
+  
+    padding: 8px 10px;
+
+    background: var(--sidebar-textfield);
+
+    border: 1px solid var(--sidebar-textfield);
+    border-radius: 12px;
+
+    color: var(--secondaryaccent);
+    font-size: 14px;
+
+    outline: none;
+
+    transition: 0.2s ease;
+}
+
+.text-input::placeholder {
+    color: var(--sidebar-placeholder);
+}
+
+.text-input:focus,
+.date-input:focus {
+    border-color: var(--focus-accent);
+    background: var(--button);
+}
+
+/* DATE GROUP*/
+
+.date-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.select-input {
+    width: 100%;
+
+    padding: 12px 14px;
+
+    background: var(--sidebar-dropdown);
+
+    border: 1px solid transparent;
+    border-radius: 4px;
+
+    color: var(--secondaryaccent);
+    font-size: 14px;
+
+    outline: none;
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+
+.select-input:focus-visible {
+    border:1px solid var(--focus-accent);
+}
+
+.select-input option {
+    background: var(--sidebar-dropdown);
+    color: var(--accent);
+}

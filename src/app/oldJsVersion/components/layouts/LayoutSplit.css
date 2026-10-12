@@ -1,0 +1,45 @@
+.split-container {
+  flex: 1;
+  display: flex;
+  width: 100%;
+  min-height: 0;
+}
+
+.split-image {
+  flex: 1;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.split-content {
+  flex: 1;
+
+  padding: 12px;
+  color: white;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  box-sizing: border-box;
+}
+
+.split-content h3,
+.split-content p {
+  margin: 0;
+}
+
+.split-content p {
+  margin-top: 6px;
+  line-height: 1.3;
+}
+
+.accent-bar {
+  width: 40px;
+  height: 4px;
+  background: #ffcc00;
+
+  margin-top: 10px;
+}
