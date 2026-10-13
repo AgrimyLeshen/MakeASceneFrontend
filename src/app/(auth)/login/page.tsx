@@ -17,24 +17,28 @@ export default async function LoginPage({
     const email = String(formData.get("email"));
     const password = String(formData.get("password"));
 
-
     let res: Response;
+    try {
       res = await fetch(`https://api.makeascene.social/v1/auth/sessions`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
+    } catch {
+      redirect("/login?error=server");
+    }
 
-    console.log(res)
     const data = await res.json().catch(() => null);
 
-    if (!res.ok || !data?.access_token) {
+    if (!res.ok || !data?.access_token || !data?.refresh_token) {
       redirect("/login?error=invalid");
     }
 
-    const { exp } = decodeJwt(data.access_token);
-    await setSession(data.access_token, exp);
-    redirect("/");
+    await setSession({
+      access_token: data.access_token,
+      refresh_token: data.refresh_token,
+    });
+    redirect("/dashboard");
   }
 
   return (

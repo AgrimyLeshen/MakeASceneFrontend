@@ -1,25 +1,31 @@
 import "server-only";
 import { cookies } from "next/headers";
+import {
+  ACCESS_COOKIE,
+  REFRESH_COOKIE,
+  cookieOptions,
+  type Tokens,
+} from "@/lib/tokens";
 
-export const SESSION_COOKIE = "session";
 
-export async function setSession(token: string, expiresAt?: number) {
+export async function setSession({access_token, refresh_token}: Tokens) {
   const store = await cookies();
-  store.set(SESSION_COOKIE, token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
-    path: "/",
-    ...(expiresAt && { expires: new Date(expiresAt * 1000) }),
-  });
+  store.set(ACCESS_COOKIE, access_token, cookieOptions(access_token)); 
+  store.set(REFRESH_COOKIE, refresh_token, cookieOptions(refresh_token, true));
 }
 
 export async function getSession() {
   const store = await cookies();
-  return store.get(SESSION_COOKIE)?.value;
+  return store.get(ACCESS_COOKIE)?.value;
 }
 
 export async function clearSession() {
   const store = await cookies();
-  store.delete(SESSION_COOKIE);
+  store.delete(ACCESS_COOKIE);
+  store.delete(REFRESH_COOKIE);
+}
+
+export async function getRefreshToken() {
+  const store = await cookies();
+  return store.get(REFRESH_COOKIE)?.value;
 }

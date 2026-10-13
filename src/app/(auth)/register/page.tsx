@@ -17,14 +17,16 @@ export default async function RegisterPage({
     const password = String(formData.get("password"));
 
     let res: Response;
+    try{
       console.log("i fire")
       res = await fetch(`https://api.makeascene.social/v1/users`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
-      
-      console.log(res)
+    } catch {
+      redirect("/register?error=server");
+    }
       
     if (!res.ok) redirect("/register?error=failed");
     redirect("/login");
