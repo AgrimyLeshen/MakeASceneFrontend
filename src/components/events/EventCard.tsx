@@ -11,7 +11,7 @@ export default function EventCard({ post }: EventCardProps) {
 
     return (
         <article
-            className="event-card"
+            className="flex w-full min-w-[225px] max-w-[400px] flex-col items-stretch overflow-hidden rounded-[5px] bg-[rgb(31,31,31)] text-[10px] transition-[transform,box-shadow] duration-200 ease-in-out hover:scale-[1.02] hover:shadow-[0_10px_25px_rgba(0,0,0,0.25)]"
             style={{
                 "--color-primary": post.colors[0],
                 "--color-secondary": post.colors[1],
@@ -20,7 +20,7 @@ export default function EventCard({ post }: EventCardProps) {
         >
             <EventCardHeader post={post} />
 
-            <div className="event-card-body">
+            <div className="flex min-h-0 flex-1">
                 <Layout post={post} />
             </div>
         </article>
