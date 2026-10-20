@@ -1,4 +1,4 @@
-import type { Post } from "../../testdata/EventPostData";
+import type { Post } from "../../../../testdata/EventPostData";
 import "./BasicLayout.css";
 
 function formatDate(date: Post["date"]) {

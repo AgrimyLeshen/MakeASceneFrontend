@@ -1,6 +1,6 @@
-import type { Post } from "../testdata/EventPostData";
+import type { Post } from "../../testdata/EventPostData";
 import EventCardHeader from "./EventCardHeader";
-import { layoutRegistry } from "./layoutRegistry";
+import { layoutRegistry } from "./EventLayouts/layoutRegistry";
 
 type EventCardProps = {
     post: Post;

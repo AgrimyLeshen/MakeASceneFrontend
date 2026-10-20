@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import type { Post } from "../testdata/EventPostData";
+import type { Post } from "../../testdata/EventPostData";
 import "../css/EventCardHeader.css";
 
 import calendarIcon from "../app/oldJsVersion/assets/addCalendar.png";

@@ -1,7 +1,7 @@
 import type { ComponentType } from "react";
-import type { Post } from "../testdata/EventPostData";
+import type { Post } from "../../../testdata/EventPostData";
 
-import BasicLayout from "./EventLayouts/BasicLayout";
+import BasicLayout from "./Basic/BasicLayout";
 
 type EventLayoutProps = {
     post: Post;
