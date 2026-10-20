@@ -3,11 +3,11 @@
 import { useState } from "react";
 import Image from "next/image";
 import type { Post } from "../../testdata/EventPostData";
-import "../css/EventCardHeader.css";
+import "./EventCardHeader.css";
 
-import calendarIcon from "../app/oldJsVersion/assets/addCalendar.png";
-import heartFilled from "../app/oldJsVersion/assets/heartFilled.png";
-import heartOutline from "../app/oldJsVersion/assets/heartOutline.png";
+import calendarIcon from "../../app/oldJsVersion/assets/addCalendar.png";
+import heartFilled from "../../app/oldJsVersion/assets/heartFilled.png";
+import heartOutline from "../../app/oldJsVersion/assets/heartOutline.png";
 
 type EventCardHeaderProps = {
     post: Post;
