@@ -1,0 +1,42 @@
+.event-card {
+  width: 100%;
+  min-width: 225px;
+  max-width: 400px;
+
+  border-radius: 5px;
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+
+  background: rgb(31, 31, 31);
+
+  font-size: 10px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.event-body-wrapper {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}
+
+.event-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+}
+
+/* Layout size variants ONLY */
+.event-card--hero {
+  height: 420px;
+}
+
+.event-card--compact {
+  height: 180px;
+}
+
+.event-card--split {
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+}

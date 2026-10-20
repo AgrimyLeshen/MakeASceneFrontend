@@ -1,0 +1,153 @@
+.filterlist {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px;
+    background: transparent;
+}
+
+/*FILTER CONTAINER */
+
+.filterbox {
+    display: flex;
+    align-items: center;
+    height: 38px;
+    border-radius: 2px;
+    overflow: hidden;
+    color: var(--color-white);
+    font-family: sans-serif;
+    transition: 0.2s ease;
+}
+
+.filterbox.include {
+    background: var(--filter-include-bg);
+}
+
+.filterbox.exclude {
+    background: var(--filter-exclude-bg);
+}
+
+.filterbox.none {
+    background: var(--filter-default-bg);
+}
+
+/* LEFT CHECK AREA*/
+
+.check {
+    width: 44px;
+    height: 115%;
+    padding-left: 4px;
+    display: flex;
+    overflow: hidden;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s ease;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+
+}
+
+.check svg {
+    width: 18px;
+    height: 18px;
+    stroke-width: 3;
+}
+
+/* include */
+.check.active {
+    background: var(--filter-include-check-bg);
+    outline: 12px solid  var(--filter-include-check-border);
+    color: var(--filter-include-check);
+}
+
+/* exclude */
+.check.deactivated {
+    background:  var(--filter-exclude-check-bg);
+    color: var(--filter-exclude-check);
+}
+
+/* none */
+.check.default {
+    background: var(--filter-default-check-bg);
+    color: var(--filter-default-check);
+}
+
+
+.check::after {
+    content: "";
+    position: absolute;
+    right: -14px;
+    top: 0;
+    width: 18px;
+    height: 100%;
+    background: inherit;
+}
+
+/* NAME */
+
+.name {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-size: 15px;
+    letter-spacing: 0.2px;
+}
+
+.name p {
+    margin: 0;
+    color: var(--text);
+}
+
+/* RIGHT X AREA*/
+
+.x {
+    width: 44px;
+    height: 115%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s ease;
+
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+}
+
+.x svg {
+    width: 18px;
+    height: 18px;
+    stroke-width: 3;
+}
+
+/* active exclude */
+.x.active {
+    background: var(--filter-exclude-x-bg);
+    outline: 12px solid var(--filter-exclude-x-border);
+    color: var(--filter-default-x);
+    transition: 0.2s ease;
+}
+
+/* include */
+.x.deactivated {
+    background: var(--filter-include-x-bg);
+    color: var(--filter-include-x);
+}
+
+/* none */
+.x.default {
+    background: var(--filter-default-x-bg);
+    color: var(--filter-default-x);
+}
+
+
+
+/*HOVER */
+
+.filterbox:hover {
+    filter: brightness(1.08);
+    cursor: pointer;
+}
