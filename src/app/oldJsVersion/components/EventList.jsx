@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState, useEffect } from "react";
-import EventCard from "./EventCard";
+import EventCard from "../../../components/events/EventCard";
 import "../css/EventList.css";
 
 function getColumnCount(width) {
@@ -58,7 +58,7 @@ export default function EventList({ events }) {
           <div key={colIdx} style={{ flex: 1 }}>
             {col.map((event, idx) => (
               <div key={event.id ?? idx} className="event-wrapper">
-                <EventCard event={event} />
+                <EventCard post={event} />
               </div>
             ))}
           </div>
