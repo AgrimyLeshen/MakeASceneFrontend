@@ -49,7 +49,7 @@ export default async function LoginPage({
       {error === "invalid" && <p role="alert" className="text-sm text-red-600">E-Mail oder Passwort falsch.</p>}
       {error === "server" && <p role="alert" className="text-sm text-red-600">Server nicht erreichbar.</p>}
 
-      <form action={login} className="flex flex-col gap-3">
+      <form action={login} className="flex flex-col gap-3 text-white">
         <input name="email" type="email" placeholder="E-Mail" autoComplete="email" required className="rounded border px-3 py-2" />
         <input name="password" type="password" placeholder="Passwort" autoComplete="current-password" required className="rounded border px-3 py-2" />
         <button type="submit" className="rounded bg-black px-4 py-2 text-white">Anmelden</button>

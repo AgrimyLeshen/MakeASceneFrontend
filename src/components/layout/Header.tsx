@@ -1,16 +1,18 @@
 "use client";
-import { useRouter } from "next/navigation"
+import { useRouter, usePathname } from "next/navigation";
+import Link from "next/link";
+import type {Route} from "next";
 
 import { useCallback, useState, type ReactNode } from "react";
-import HamburgerSideBar from "@/components/HamburgerSideBar";
-import FilterSideBar from "@/components/FilterSideBar";
-import SearchBar from "@/components/Searchbar";
-import SidebarOverlay from "@/components/SideBarOverlay";
+import HamburgerSideBar from "@/components/layout/HamburgerSideBar";
+import FilterSideBar from "@/components/layout/FilterSideBar";
+import SearchBar from "@/components/layout/Searchbar";
+import SidebarOverlay from "@/components/layout/SideBarOverlay";
 
 export interface NavItem {
     id: string;
     label: string;
-    href?: string;
+    href?: Route;
 }
 
 type HeaderTypes = {
@@ -30,9 +32,9 @@ type HeaderTypes = {
 }
 
 const defaultNav: NavItem[] = [
-    { id: "nearby", label: "Nearby" },
-    { id: "myscene", label: "My Scene" },
-    { id: "getinvolved", label: "Get Involved" },
+    { id: "nearby", label: "Nearby", href: "/nearby" },
+    { id: "myscene", label: "My Scene", href: "/myscene" },
+    { id: "getinvolved", label: "Get Involved", href: "/getinvolved" },
 ];
 
 type Panel = "menu" | "filter" | null;
@@ -47,21 +49,18 @@ export default function Header({navItems = defaultNav, onNavChange, activeNav, o
     const [panel, setPanel] = useState<Panel>(null);
     const [query, setQuery] = useState("");
     const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
-    const [internalActive, setInternalActive] = useState(navItems[0]?.id);
 
-    const active = activeNav ?? internalActive;
 
     const toggle = (target: Exclude<Panel, null>) =>
         setPanel((current) => (current === target ? null : target));
 
+
     const closePanel = useCallback(() => setPanel(null), []);
 
-    const selectNav = (item: NavItem) => {
-        setInternalActive(item.id);
-        onNavChange?.(item.id);
-    };
-
     const router = useRouter();
+    const pathname = usePathname();
+
+    const isItemActive = (item: NavItem) => !!item.href && (pathname == item.href || pathname.startsWith(item.href + "/"));
 
     const handleSearch = (q: string) => {
         const trimmed = q.trim();
@@ -92,24 +91,20 @@ export default function Header({navItems = defaultNav, onNavChange, activeNav, o
                         className="flex h-full min-w-0 flex-1 items-center justify-center sm:flex-none sm:justify-start sm:pl-2"
                     >
                         {navItems.map((item) => {
-                            const isActive = item.id === active;
+                            const isActive = isItemActive(item);
                             return (
-                                <a
+                                <Link
                                     key={item.id}
-                                    href={item.href ?? "#"}
+                                    href={item.href ?? "/"}
                                     aria-current={isActive ? "page" : undefined}
-                                    onClick={(e) => {
-                                        if (!item.href) e.preventDefault();
-                                        selectNav(item);
-                                    }}
                                     className={`${navLinkBase} ${
                                         isActive
-                                        ? "text-white after:scale-x-100"
-                                        : "text-[#AEC3B0]"
+                                            ? "text-white after:scale-x-100"
+                                            : "text-[#AEC3B0]"
                                     }`}
                                 >
                                     {item.label}
-                                </a>
+                                </Link>
                             );
                         })}
                     </nav>
