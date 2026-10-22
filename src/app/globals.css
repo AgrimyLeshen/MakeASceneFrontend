@@ -13,13 +13,25 @@
   --header: #124559;
   --sidebar: #102C36;
   --stripline: #124559;
+
+
   --button-bg: #124559;
   --textfield: #124559;
   --searchbar: #EFF6E0;
+  --notification: #FF5555;
+
+
+  --icons: #EFF6E0;
+  --icons-dark: #AEC3B0;
+  --icons-light: #598392; /*used direcly on background, for exapmle during event creator*/
+
 
   --text: #EFF6E0;
   --text-muted: #AEC3B0;
   --text-search: #01161E;
+
+  /*--link:
+  --link-hover: */
 }
 
 @theme inline {
@@ -29,10 +41,18 @@
   --color-header: var(--header);
   --color-sidebar: var(--sidebar);
   --color-stripline: var(--stripline);
+
+
   --color-button-bg: var(--button-bg);
   --color-textfield: var(--textfield);
   --color-searchbar: var(--searchbar);
+  --color-notification: var(--notification);
 
+
+  --color-icons: var(--icons);
+  --color-icons-dark: var(--icons-dark);
+  --color-icons-light: var(--icons-light);
+  
 
   --color-text: var(--text);
   --color-text-muted: var(--text-muted);

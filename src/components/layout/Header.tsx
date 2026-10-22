@@ -99,7 +99,7 @@ export default function Header({navItems = defaultNav, onNavChange, activeNav, o
                                     aria-current={isActive ? "page" : undefined}
                                     className={`${navLinkBase} ${
                                         isActive
-                                            ? "text-white after:scale-x-100"
+                                            ? "text-text after:scale-x-100"
                                             : "text-text-muted"
                                     }`}
                                 >
