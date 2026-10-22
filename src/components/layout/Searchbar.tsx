@@ -26,7 +26,7 @@ export default function SearchBar({value, onChange, onSubmit, placeholder = "Sea
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         aria-label={placeholder}
-        className="w-full h-7 rounded-full bg-[#EFF6E0] py-2 pl-10 pr-4 text-sm text-[#01161E] outline-none placeholder:text-[#01161E] focus:ring-2 focus:ring-[#55d2ff]"
+        className="w-full h-7 rounded-full bg-text py-2 pl-10 pr-4 text-sm text-[#01161E] outline-none placeholder:text-[#01161E] focus:ring-2 focus:ring-[#55d2ff]"
       />
     </form>
   );

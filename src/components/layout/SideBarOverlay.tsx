@@ -39,7 +39,7 @@ export default function SidebarOverlay({id, open, side, label, onClose, children
         id={id}
         aria-label={label}
         aria-hidden={!open}
-        className={`fixed bottom-0 top-[55px] z-[2100] w-[min(85vw,285px)] overflow-y-auto bg-[#123a4c] p-5 text-[#d3e6ee] shadow-2xl transition-[transform,translate,visibility] duration-300 ease-out ${position} ${
+        className={`fixed bottom-0 top-[55px] z-[2100] w-[min(85vw,285px)] overflow-y-auto bg-sidebar p-5  shadow-2xl transition-[transform,translate,visibility] duration-300 ease-out ${position} ${
           open ? "visible translate-x-0" : `invisible ${hidden}`
         }`}
       >

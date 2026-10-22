@@ -1,33 +1,72 @@
+@layer legacy, theme, base, components, utilities;
+
 @import "tailwindcss";
+@import "./oldJsVersion/index.css" layer(legacy);
+
+/* =========================
+   colors and fonts
+========================= */
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+
+  --background: #01161E;
+  --header: #124559;
+  --sidebar: #102C36;
+  --stripline: #124559;
+  --button-bg: #124559;
+  --textfield: #124559;
+  --searchbar: #EFF6E0;
+
+  --text: #EFF6E0;
+  --text-muted: #AEC3B0;
+  --text-search: #01161E;
 }
 
 @theme inline {
+
+  /* color classes */
   --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-header: var(--header);
+  --color-sidebar: var(--sidebar);
+  --color-stripline: var(--stripline);
+  --color-button-bg: var(--button-bg);
+  --color-textfield: var(--textfield);
+  --color-searchbar: var(--searchbar);
+
+
+  --color-text: var(--text);
+  --color-text-muted: var(--text-muted);
+  --color-text-search: var(--text-search);
+
+
+  /* font classes (import via layout.tsx) */
+  --font-sans: var(--font-inter), Arial, Helvetica, sans-serif;
+
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #000000;
+
+
+/* =========================
+   Basis-Styles
+   In @layer base: Tailwind-Klassen (text-white, bg-red-500 ...) gewinnen immer
+========================= */
+
+@layer base {
+  html {
+    @apply bg-background;
   }
-}
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
-body {
-  background: #01161E !important;
-}
+  body {
+    background-color: var(--background);
+    color: var(--text);
+    font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+    -webkit-font-smoothing: antialiased;
 
-h1 {
-  color: blue !important;
+  }
+
+  /* Überschriften erben die Textfarbe vom body */
+  h1,
+  h2{
+    color: var(--text);
+  }
 }

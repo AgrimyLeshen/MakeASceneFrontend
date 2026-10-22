@@ -68,7 +68,7 @@ export default function Header({navItems = defaultNav, onNavChange, activeNav, o
 
     return (
         <>
-            <header className="fixed inset-x-0 top-0 z-[3000] bg-[#124559] text-[#d3e6ee] shadow-[0_10px_20px_rgba(0,0,0,0.35)]">
+            <header className="fixed inset-x-0 top-0 z-[3000] bg-header shadow-[0_10px_20px_rgba(0,0,0,0.35)]">
                 <div className="flex h-[55px] items-center gap-2 px-[clamp(10px,2%,10px)] sm:gap-4">
                     <HamburgerSideBar
                         isOpen={panel === "menu"}
@@ -78,10 +78,10 @@ export default function Header({navItems = defaultNav, onNavChange, activeNav, o
 
                     {/* for mobile */}
                     <div className="hidden items-center gap-3 sm:flex">
-                        <div className="h-[50px] w-[50px] translate-y-[5px] overflow-hidden rounded-full bg-[#f4f3d3] ring-4 ring-[#124559]">
+                        <div className="h-[50px] w-[50px] translate-y-[5px] overflow-hidden rounded-full bg-text ring-4 ring-header">
                             <img src="logo.svg" alt="logo" className="h-full w-full object-cover" />
                         </div>
-                        <span className="whitespace-nowrap text-[19px] font-bold text-[#EFF6E0]">
+                        <span className="whitespace-nowrap text-[22px] font-bold text-text">
                             {title}
                         </span>
                     </div>
@@ -100,7 +100,7 @@ export default function Header({navItems = defaultNav, onNavChange, activeNav, o
                                     className={`${navLinkBase} ${
                                         isActive
                                             ? "text-white after:scale-x-100"
-                                            : "text-[#AEC3B0]"
+                                            : "text-text-muted"
                                     }`}
                                 >
                                     {item.label}
@@ -123,7 +123,7 @@ export default function Header({navItems = defaultNav, onNavChange, activeNav, o
                             onClick={() => setMobileSearchOpen((o) => !o)}
                             aria-label="Toggle search"
                             aria-expanded={mobileSearchOpen}
-                            className="flex h-10 w-10 items-center justify-center rounded-md text-[#EFF6E0] hover:bg-white/10 sm:hidden"
+                            className="flex h-10 w-10 items-center justify-center rounded-md hover:bg-white/10 sm:hidden"
                         >
                             <img src="search.svg" alt="search" className="h-5 w-5" />
                         </button>
@@ -138,7 +138,7 @@ export default function Header({navItems = defaultNav, onNavChange, activeNav, o
 
                 {/* for mobile */}
                 {mobileSearchOpen && (
-                    <div className="absolute inset-x-0 top-full bg-[#124559] p-3 shadow-lg sm:hidden">
+                    <div className="absolute inset-x-0 top-full bg-header p-3 shadow-lg sm:hidden">
                         <SearchBar
                             value={query}
                             onChange={setQuery}
@@ -158,7 +158,7 @@ export default function Header({navItems = defaultNav, onNavChange, activeNav, o
                 open={panel === "menu"}
                 onClose={closePanel}
             >
-                {menuPanel ?? <h2 className="text-xl">Menu</h2>}
+                {menuPanel ?? <h2 className="text-xl font-bold">Menu</h2>}
             </SidebarOverlay>
 
             <SidebarOverlay

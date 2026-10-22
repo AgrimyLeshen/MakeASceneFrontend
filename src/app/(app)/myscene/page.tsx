@@ -4,18 +4,17 @@ import Header from "@/components/layout/Header";
 import { testPosts } from "@/testdata/EventPostData";
 import EventList from "@/app/oldJsVersion/components/EventList"
 
+
 export default function MyScenePage(){
 
     const [events, setEvents] = useState(testPosts);
 
     return(
         <>
-            <Header
-            />
+            <Header/>
             <div className='pt-12'>
                 <EventList events={events}/>
             </div>
         </>
     );
-
 };
