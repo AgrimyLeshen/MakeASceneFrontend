@@ -1,0 +1,165 @@
+:root {
+  --color-white: #eff6e0;
+  --color-dark-blue: #0e2b3b;
+  --color-teal-dark: #0d3d46;
+  --color-teal-medium: #125859;
+  --color-medium-blue: #124559;
+  --color-teal-light: #669187;
+  --color-sage: #aec3b0;
+  --color-black: #01161e;
+  --color-gray-blue: #192135;
+  --color-purple: #2f2d3d;
+  --color-burgundy: #4b2640;
+  --color-magenta: #a81e49;
+  --color-light-blue: #598392;
+  
+  
+  
+  --text: #6b6375;
+  --text-h: #08060d;
+  --bg: #01161e;
+  --border: #e5e4e7;
+  --sidebar-bg: var(--color-dark-blue);
+  --code-bg: #f4f3ec;
+  --accent: #aa3bff;
+  --accent-bg: rgba(170, 59, 255, 0.1);
+  --accent-border: rgba(170, 59, 255, 0.5);
+  --social-bg: rgba(244, 243, 236, 0.5);
+  --shadow:
+    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+
+  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --mono: ui-monospace, Consolas, monospace;
+
+  font: 18px/145% var(--sans);
+  letter-spacing: 0.18px;
+  color-scheme: light dark;
+  color: var(--text);
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  @media (max-width: 1024px) {
+    font-size: 16px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: var(--color-sage);
+    --text-h: var(--color-white);
+    --bg: var(--color-black);
+    --header-bg: var(--color-medium-blue);
+    --sidebar-bg: var(--color-dark-blue);
+    --sidebar-hover: var(--color-teal-dark);
+    --outline:var(--color-black);
+
+    --accent: var(--color-white);
+    --secondary-accent: var(--color-sage);
+    --button: var(--color-medium-blue);
+    --button-hover: var(--color-teal-medium);
+    --focus-accent: var(--color-teal-light);
+    --sidebar-dropdown: var(--color-teal-dark);
+    --sidebar-section-bg: var(--color-dark-blue);
+    --sidebar-section-hover: var(--color-medium-blue);
+    --sidebar-divider: var(--color-teal-dark);
+    --sidebar-textfield: var(--color-gray-blue);
+    --sidebar-placeholder: var(--color-light-blue);
+
+    --scrollbar-track: var(--color-dark-blue);
+    --scrollbar-thumb: var(--color-teal-medium);
+
+    --shadow:
+      rgba(28, 25, 44, 0.3);
+
+    --filter-text: var(--color-white);
+
+    --filter-default-bg: var(--color-medium-blue);
+    --filter-default-check-bg: var(--color-light-blue);
+    --filter-default-x-bg: var(--color-light-blue);
+    --filter-default-check: var(--color-white);
+    --filter-default-x: var(--color-white);
+
+    --filter-include-bg: var(--color-teal-medium);
+    --filter-include-check-bg: var(--color-sage);
+    --filter-include-check-border: var(--color-teal-light);
+    --filter-include-x-bg: var(--color-teal-dark);
+    --filter-include-check: var(--color-white);
+    --filter-include-x: var(--color-light-blue);
+
+    --filter-exclude-bg: var(--color-purple);
+    --filter-exclude-check-bg: var(--color-gray-blue);
+    --filter-exclude-x-bg: var(--color-magenta);
+    --filter-exclude-x-border: var(--color-burgundy);
+    --filter-exclude-check: var(--color-light-blue);
+    --filter-exclude-x: var(--color-white);
+
+  }
+
+  #social .button-icon {
+    filter: invert(1) brightness(2);
+  }
+}
+
+body {
+  margin: 0;
+}
+
+#root {
+  width: 1126px;
+  max-width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  border-inline: 1px solid var(--border);
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+h1,
+h2 {
+  font-family: var(--heading);
+  font-weight: 500;
+  color: var(--text-h);
+}
+
+h1 {
+  font-size: 56px;
+  letter-spacing: -1.68px;
+  margin: 32px 0;
+  @media (max-width: 1024px) {
+    font-size: 36px;
+    margin: 20px 0;
+  }
+}
+h2 {
+  font-size: 24px;
+  line-height: 118%;
+  letter-spacing: -0.24px;
+  margin: 0 0 8px;
+  @media (max-width: 1024px) {
+    font-size: 20px;
+  }
+}
+p {
+  margin: 0;
+}
+
+code,
+.counter {
+  font-family: var(--mono);
+  display: inline-flex;
+  border-radius: 4px;
+  color: var(--text-h);
+}
+
+code {
+  font-size: 15px;
+  line-height: 135%;
+  padding: 4px 8px;
+  background: var(--code-bg);
+}

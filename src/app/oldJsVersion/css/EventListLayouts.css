@@ -1,0 +1,25 @@
+.feed {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.layoutA {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(112px, 225px));
+  grid-auto-rows: min-content;
+  grid-auto-flow: dense;
+  gap: 12px;
+}
+
+.big {
+  grid-column: span 2;
+  grid-row: span 2;
+  min-width: 250px;
+  max-width: 400px;
+}
+
+.small {
+  grid-column: auto;
+  grid-row: auto;
+}
