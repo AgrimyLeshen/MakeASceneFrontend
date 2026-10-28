@@ -27,38 +27,66 @@ function initialState(selection?: Selection, mark: Mark = "none"): FilterState {
   return { mark, selection: selection ?? "none" };
 }
 
+
+
+/* ------------------------------------------------------------------ */
+/* Styles – ported from the old Filter.css (colors = your CSS vars)    */
+/* ------------------------------------------------------------------ */
+
+// .filterbox.include / .exclude / .none
 const containerBg: Record<Selection, string> = {
-  none: "bg-[#134b63]",
-  include: "bg-[#10685c]",
-  exclude: "bg-[#332b43]",
+  none: "bg-[color:var(--filter-default-bg)]",
+  include: "bg-[color:var(--filter-include-bg)]",
+  exclude: "bg-[color:var(--filter-exclude-bg)]",
 };
 
+// Border of the whole row, only used for subscribed / blocked
 const containerBorder: Record<Mark, string> = {
   none: "border-transparent",
   subscribed: "border-[#6f98ab]",
   blocked: "border-[#5b2142]",
 };
 
-const includeBg: Record<Selection, string> = {
-  none: "bg-[#1a5b78]",
-  include: "bg-[#25b673]",
-  exclude: "bg-[#1d1b40]",
+// .check.active / .deactivated / .default
+// The 12px "halo" around the active button was `outline: 12px solid …`.
+// A spread box-shadow looks the same, but paints *below* later siblings,
+// so the name text stays on top of it.
+const includeBtn: Record<Selection, string> = {
+  include:
+    "bg-[color:var(--filter-include-check-bg)] text-[color:var(--filter-include-check)] shadow-[0_0_0_8px_var(--filter-include-check-border)]",
+  exclude:
+    "bg-[color:var(--filter-exclude-check-bg)] text-[color:var(--filter-exclude-check)]",
+  none: "bg-[color:var(--filter-default-check-bg)] text-[color:var(--filter-default-check)]",
 };
 
-const excludeBg: Record<Selection, string> = {
-  none: "bg-[#1a5b78]",
-  include: "bg-[#0f4f4d]",
-  exclude: "bg-[#b3204d]",
+// .x.active / .deactivated / .default
+const excludeBtn: Record<Selection, string> = {
+  exclude:
+    "bg-[color:var(--filter-exclude-x-bg)] text-[color:var(--filter-default-x)] shadow-[0_0_0_8px_var(--filter-exclude-x-border)]",
+  include:
+    "bg-[color:var(--filter-include-x-bg)] text-[color:var(--filter-include-x)]",
+  none: "bg-[color:var(--filter-default-x-bg)] text-[color:var(--filter-default-x)]",
 };
 
+const focusRing =
+  "focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white/60";
+
+
+// subscribe / block button
 const sideButton =
-  "flex w-11 shrink-0 items-center justify-center bg-[#12425b] focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white/60";
+  `relative z-10 flex h-full w-8 shrink-0 cursor-pointer items-center justify-center bg-[#12425b] ${focusRing}`;
 
+
+// include / exclude button
 const mainButton =
-  "flex w-12 shrink-0 items-center justify-center rounded-full text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white/60 disabled:cursor-not-allowed";
+  `flex h-[115%] w-9 shrink-0 cursor-pointer items-center justify-center transition-[background-color,color,box-shadow] duration-200 disabled:cursor-not-allowed ${focusRing}`;
+
+/* ------------------------------------------------------------------ */
+
+
 
 export function Filter({ id, name, selection, mark, onChange }: FilterProps) {
-    
+
   const [state, setState] = useState<FilterState>(() => initialState(selection, mark));
 
   const update = (next: FilterState) => {
@@ -80,25 +108,27 @@ export function Filter({ id, name, selection, mark, onChange }: FilterProps) {
   const toggleMark = (target: "subscribed" | "blocked") => {
     if (state.mark === target) {
       update({ mark: "none", selection: target === "blocked" ? "none" : state.selection });
-    } else {
+    }
+    else {
       const selection: Selection =
         target === "blocked" ? "exclude" : isBlocked ? "none" : state.selection;
       update({ mark: target, selection });
     }
   };
 
+
   return (
     <div
-      className={`flex h-12 items-stretch overflow-hidden rounded-xl border-2 transition-colors ${containerBg[state.selection]} ${containerBorder[state.mark]}`}
+      className={`isolate flex h-[38px] w-full min-w-0 items-center overflow-hidden rounded-xl border-2 transition-colors duration-200 hover:brightness-[1.08] ${containerBg[state.selection]} ${containerBorder[state.mark]}`}
     >
       <button
         type="button"
         aria-label={`Subscribe to ${name}`}
         aria-pressed={isSubscribed}
         onClick={() => toggleMark("subscribed")}
-        className={`${sideButton} ${isSubscribed ? "text-[#a9c1b4]" : "text-[#0b2a3d] hover:text-[#5f8396]"}`}
+        className={`${sideButton} rounded-r-xl ${isSubscribed ? "text-[#a9c1b4]" : "text-[#0b2a3d] hover:text-[#5f8396]"}`}
       >
-        <svg viewBox="0 0 24 24" className="h-5 w-5" fill={isSubscribed ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2.5" strokeLinejoin="round">
+        <svg viewBox="0 0 24 24" className="h-4 w-4" fill={isSubscribed ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2.5" strokeLinejoin="round">
           <path d="M6 3h12v18l-6-4.5L6 21z" />
         </svg>
       </button>
@@ -109,16 +139,20 @@ export function Filter({ id, name, selection, mark, onChange }: FilterProps) {
         aria-pressed={state.selection === "include"}
         disabled={isBlocked}
         onClick={() => toggleSelection("include")}
-        className={`${mainButton} ${includeBg[state.selection]}`}
+        className={`${mainButton} -ml-3 rounded-r-[25px] pl-3 ${includeBtn[state.selection]}`}
       >
         <svg viewBox="0 0 16 16" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M3 8.5l3.5 3.5L13 4.5" />
         </svg>
       </button>
 
-      <span className="flex min-w-0 flex-1 items-center justify-center truncate px-2 text-sm text-white">
-        {name}
-      </span>
+
+      <div className="flex h-full min-w-0 flex-1 items-center justify-center px-1">
+        <span className="truncate text-[12px] tracking-[0.2px] text-text" title={name}>
+          {name}
+        </span>
+      </div>
+
 
       <button
         type="button"
@@ -126,7 +160,7 @@ export function Filter({ id, name, selection, mark, onChange }: FilterProps) {
         aria-pressed={state.selection === "exclude"}
         disabled={isBlocked}
         onClick={() => toggleSelection("exclude")}
-        className={`${mainButton} ${excludeBg[state.selection]} ${state.selection === "include" ? "text-[#6b8a90]" : ""}`}
+        className={`${mainButton} -mr-3 rounded-l-[25px] pr-3 ${excludeBtn[state.selection]}`}
       >
         <svg viewBox="0 0 16 16" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M4 4l8 8M12 4l-8 8" />
@@ -138,9 +172,9 @@ export function Filter({ id, name, selection, mark, onChange }: FilterProps) {
         aria-label={`Block ${name}`}
         aria-pressed={isBlocked}
         onClick={() => toggleMark("blocked")}
-        className={`${sideButton} ${isBlocked ? "text-[#d6254f]" : "text-[#0b2a3d] hover:text-[#5f8396]"}`}
+        className={`${sideButton} rounded-l-xl ${isBlocked ? "text-[#d6254f]" : "text-[#0b2a3d] hover:text-[#5f8396]"}`}
       >
-        <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+        <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
           <circle cx="12" cy="12" r="9" />
           <path d="M5.6 5.6l12.8 12.8" />
         </svg>

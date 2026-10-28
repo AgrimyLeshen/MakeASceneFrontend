@@ -30,6 +30,22 @@
   --text-muted: #AEC3B0;
   --text-search: #01161E;
 
+
+  --filter-button-bg: #15536C;
+
+  --filter-include-bg: #125859;
+  --filter-include-check-bg: #22B26F;
+  --filter-include-check-border: #1C8169;
+  --filter-include-x-bg: #0D3D46;
+  --filter-include-x:#808080;
+
+  --filter-exclude-bg: #2F2D3D;
+  --filter-exclude-check-bg: #1C1C3A;
+  --filter-exclude-x-bg: #A81E49;
+  --filter-exclude-x-border: #4B2640;
+  --filter-exclude-check: #808080;
+
+
   /*--link:
   --link-hover: */
 }
@@ -57,6 +73,30 @@
   --color-text: var(--text);
   --color-text-muted: var(--text-muted);
   --color-text-search: var(--text-search);
+
+
+
+  --filter-text: var(--text);
+
+  --filter-default-bg: var(--header);
+  --filter-default-check-bg: var(--filter-button-bg);
+  --filter-default-x-bg: var(--filter-button-bg);
+  --filter-default-check: var(--icons);
+  --filter-default-x: var(--icons);
+
+  --filter-include-bg: var(--color-teal-medium);
+  --filter-include-check-bg: var(--color-sage);
+  --filter-include-check-border: var(--color-teal-light);
+  --filter-include-x-bg: var(--color-teal-dark);
+  --filter-include-check: var(--icons);
+  --filter-include-x: var(--color-light-blue);
+
+  --filter-exclude-bg: var(--color-purple);
+  --filter-exclude-check-bg: var(--color-gray-blue);
+  --filter-exclude-x-bg: var(--color-magenta);
+  --filter-exclude-x-border: var(--color-burgundy);
+  --filter-exclude-check: var(--color-light-blue);
+  --filter-exclude-x: var(--icons);
 
 
   /* font classes (import via layout.tsx) */

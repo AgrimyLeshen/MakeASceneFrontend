@@ -5,6 +5,7 @@ import { testPosts } from "@/testdata/EventPostData";
 import EventList from "@/app/oldJsVersion/components/EventList"
 import { Filter, FilterData, FilterState } from "@/components/forms/Filter";
 import FilterList from '@/components/forms/FilterList';
+import FilterContent from '@/components/forms/FilterContent';
 
 
 const filters: FilterData[] = [
@@ -23,9 +24,17 @@ export default function NearbyPage(){
     return(
         <>
             <Header
+                filterContent={
+                    <FilterContent
+                    subscribedTags={filters}
+                    locations={filters}
+                    whatTags={filters}
+                    blockedTags={filters}
+                    onChange={(v) => console.log(v)}
+                />
+                }
             />
             <div className='pt-12'>
-                <FilterList filters={filters} onFilterChange={(id, state) => console.log(id, state)} />
             </div>
         </>
     );

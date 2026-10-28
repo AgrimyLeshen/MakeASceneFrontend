@@ -22,10 +22,10 @@ type HeaderTypes = {
     onSearch?: (query: string) => void;
 
     /** sidebar content */
-    menuPanel?: ReactNode;
+    menuContent?: ReactNode;
 
     /** filter content */
-    filterPanel?: ReactNode;
+    filterContent?: ReactNode;
 
     logoSrc?: string;
     title?: string;
@@ -37,25 +37,25 @@ const defaultNav: NavItem[] = [
     { id: "getinvolved", label: "Get Involved", href: "/getinvolved" },
 ];
 
-type Panel = "menu" | "filter" | null;
+type Content = "menu" | "filter" | null;
 
 const navLinkBase =
   "relative flex h-full items-center whitespace-nowrap px-3 text-[13px] transition-colors hover:text-white " +
   "after:absolute after:inset-x-1 after:bottom-0 after:h-[3px] after:origin-left after:scale-x-0 after:bg-[#cfdde3] after:transition-transform after:duration-200 after:content-[''] hover:after:scale-x-100";
 
   
-export default function Header({navItems = defaultNav, onNavChange, activeNav, onSearch, menuPanel, filterPanel, logoSrc = "/images/image.png", title = "MakeAScene",}: HeaderTypes) {
+export default function Header({navItems = defaultNav, onNavChange, activeNav, onSearch, menuContent, filterContent, logoSrc = "/images/image.png", title = "MakeAScene",}: HeaderTypes) {
 
-    const [panel, setPanel] = useState<Panel>(null);
+    const [content, setContent] = useState<Content>(null);
     const [query, setQuery] = useState("");
     const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
 
 
-    const toggle = (target: Exclude<Panel, null>) =>
-        setPanel((current) => (current === target ? null : target));
+    const toggle = (target: Exclude<Content, null>) =>
+        setContent((current) => (current === target ? null : target));
 
 
-    const closePanel = useCallback(() => setPanel(null), []);
+    const closePanel = useCallback(() => setContent(null), []);
 
     const router = useRouter();
     const pathname = usePathname();
@@ -71,7 +71,7 @@ export default function Header({navItems = defaultNav, onNavChange, activeNav, o
             <header className="fixed inset-x-0 top-0 z-[3000] bg-header shadow-[0_10px_20px_rgba(0,0,0,0.35)]">
                 <div className="flex h-[55px] items-center gap-2 px-[clamp(10px,2%,10px)] sm:gap-4">
                     <HamburgerSideBar
-                        isOpen={panel === "menu"}
+                        isOpen={content === "menu"}
                         onClick={() => toggle("menu")}
                         controls="sidebar-menu"
                     />
@@ -129,7 +129,7 @@ export default function Header({navItems = defaultNav, onNavChange, activeNav, o
                         </button>
 
                         <FilterSideBar
-                            isOpen={panel === "filter"}
+                            isOpen={content === "filter"}
                             onClick={() => toggle("filter")}
                             controls="sidebar-filter"
                         />
@@ -155,20 +155,20 @@ export default function Header({navItems = defaultNav, onNavChange, activeNav, o
                 id="sidebar-menu"
                 side="left"
                 label="Menu"
-                open={panel === "menu"}
+                open={content === "menu"}
                 onClose={closePanel}
             >
-                {menuPanel ?? <h2 className="text-xl font-bold">Menu</h2>}
+                {menuContent ?? <h2 className="text-xl font-bold">Menu</h2>}
             </SidebarOverlay>
 
             <SidebarOverlay
                 id="sidebar-filter"
                 side="right"
                 label="Filter"
-                open={panel === "filter"}
+                open={content === "filter"}
                 onClose={closePanel}
             >
-                {filterPanel ?? <h2 className="text-xl font-bold">Filter</h2>}
+                {filterContent ?? <h2 className="text-xl font-bold">Filter</h2>}
             </SidebarOverlay>
         </>
     );
