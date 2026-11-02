@@ -26,6 +26,7 @@ export default function GetInvolvedPage(){
             <Header
                 filterContent={
                     <FilterContent
+                        sections={["what", "where", "when", "blocked"]}
                         subscribedTags={filters}
                         locations={filters}
                         whatTags={filters}

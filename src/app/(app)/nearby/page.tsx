@@ -26,11 +26,12 @@ export default function NearbyPage(){
             <Header
                 filterContent={
                     <FilterContent
-                    subscribedTags={filters}
-                    locations={filters}
-                    whatTags={filters}
-                    blockedTags={filters}
-                    onChange={(v) => console.log(v)}
+                        sections={["what", "where", "when"]}
+                        subscribedTags={filters}
+                        locations={filters}
+                        whatTags={filters}
+                        blockedTags={filters}
+                        onChange={(v) => console.log(v)}
                     />
                 }
             />

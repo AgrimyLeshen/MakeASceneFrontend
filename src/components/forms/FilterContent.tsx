@@ -9,7 +9,11 @@ import Dropdown from "./Dropdown";
 /* Types                                                              */
 /* ------------------------------------------------------------------ */
 
-/** Everything the sidebar reports upwards. */
+export type SectionId = "subscribed" | "where" | "when" | "what" | "blocked";
+
+export const ALL_SECTIONS: SectionId[] = ["subscribed", "where", "when", "what", "blocked"];
+
+
 export interface FilterValues {
   /** selection + mark per filter id (only filters the user touched) */
   filters: Record<string, FilterState>;
@@ -25,15 +29,19 @@ interface FilterContentProps {
   locations?: FilterData[];
   whatTags?: FilterData[];
   blockedTags?: FilterData[];
+  sections?: SectionId[];
   onChange?: (values: FilterValues) => void;
 }
+
+export const isDateRangeValid = (from: string, till: string) =>
+  !from || !till || from <= till;
+
 
 /* ------------------------------------------------------------------ */
 /* Small building blocks                                              */
 /* ------------------------------------------------------------------ */
 
 
-/** Centered section title with the thin line underneath */
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
     <section className="flex flex-col gap-3">
@@ -49,11 +57,7 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
 const inputBase = "w-full rounded-md bg-black/30 px-2 py-1.5 text-[11px] text-text focus:outline focus:outline-1 focus:outline-[#cfe3ea]";
 
 
-function TextInput({
-  value,
-  onChange,
-  placeholder,
-}: {
+function TextInput({value, onChange, placeholder}: {
   value: string;
   onChange: (v: string) => void;
   placeholder: string;
@@ -70,31 +74,34 @@ function TextInput({
 }
 
 
-function DateInput({
-  value,
-  onChange,
-  label,
-}: {
+function DateInput({value, onChange, label, min, max, invalid = false}: {
   value: string;
   onChange: (v: string) => void;
   label: string;
+  min?: string;
+  max?: string;
+  invalid?: boolean;
 }) {
   return (
     <input
       type="date"
       aria-label={label}
+      aria-invalid={invalid}
       value={value}
+      min={min}
+      max={max}
       onChange={(e) => onChange(e.target.value)}
       className={`${inputBase} [color-scheme:dark]`}
     />
   );
 }
 
+
 /* ------------------------------------------------------------------ */
 /* FilterContent                                                       */
 /* ------------------------------------------------------------------ */
 
-export default function FilterContent({subscribedTags = [],locations = [],whatTags = [],blockedTags = [],onChange}: FilterContentProps) {
+export default function FilterContent({subscribedTags = [],locations = [],whatTags = [],blockedTags = [],onChange , sections = ALL_SECTIONS}: FilterContentProps) {
 
     const [values, setValues] = useState<FilterValues>({
         filters: {},
@@ -119,44 +126,92 @@ export default function FilterContent({subscribedTags = [],locations = [],whatTa
         return next;
         });
 
+    
+    const rangeInvalid = !isDateRangeValid(values.from, values.till);
+
+    const show = (id: SectionId) => sections.includes(id);
+      
+
     return (
         <div className="flex flex-col gap-6 text-text">
             <h2 className="text-xl font-bold">Filter</h2>
-
+ 
             {/* ---------------- Subscribed ---------------- */}
-            <Section title="Subscribed">
-                <Dropdown label="Initiatives" />
-                <Dropdown label="Tags" defaultOpen>
-                    <FilterList filters={subscribedTags} onFilterChange={handleFilterChange} />
-                </Dropdown>
-            </Section>
-
+            {show("subscribed") && (
+                <Section title="Subscribed">
+                    <Dropdown label="Initiatives" />
+                    <Dropdown label="Tags" defaultOpen>
+                        <FilterList filters={subscribedTags} onFilterChange={handleFilterChange} />
+                    </Dropdown>
+                </Section>
+            )}
+ 
             {/* ---------------- Where? ---------------- */}
-            <Section title="What?">
-                <Dropdown label="Tags" defaultOpen>
-                    <FilterList filters={whatTags} onFilterChange={handleFilterChange} />
-                </Dropdown>
-                <Dropdown label="Details" />
-            </Section>
-
+            {show("where") && (
+                <Section title="Where?">
+                    <Dropdown label="Tags" defaultOpen>
+                        <FilterList filters={locations} onFilterChange={handleFilterChange} />
+                    </Dropdown>
+                    <Dropdown label="Details" />
+                    <TextInput
+                      value={values.otherLocations}
+                      onChange={(v) => patch({ otherLocations: v })}
+                      placeholder="Other locations"
+                    />
+                </Section>
+            )}
+ 
             {/* ---------------- When? ---------------- */}
-            <Section title="When?">
-                <Dropdown label="Time Interval" defaultOpen />
-                <DateInput label="From" value={values.from} onChange={(v) => patch({ from: v })} />
-                        <span className="text-[13px] text-text-muted">till</span>
-                <DateInput label="Till" value={values.till} onChange={(v) => patch({ till: v })} />
-            </Section>
-
+            {show("when") && (
+                <Section title="When?">
+                    <Dropdown label="Time Interval" defaultOpen />
+                    <DateInput label="From"
+                               value={values.from} 
+                               max={values.till || undefined}
+                               invalid={rangeInvalid}
+                               onChange={(v) => patch({ from: v })} 
+                    />
+                    <span className="text-[13px] text-text-muted">till</span>
+ 
+                    <DateInput label="Till" 
+                               value={values.till} 
+                               min={values.from || undefined}
+                               invalid={rangeInvalid}
+                               onChange={(v) => patch({ till: v })} 
+                    />
+                    {rangeInvalid && (
+                        <p role="alert" className="text-[11px] text-notification">
+                            The start date must not be after the end date.
+                        </p>
+                    )}
+                </Section>
+            )}
+ 
             {/* ---------------- What? ---------------- */}
-        
-
+            {show("what") && (
+                <Section title="What?">
+                    <Dropdown label="Tags" defaultOpen>
+                        <FilterList filters={whatTags} onFilterChange={handleFilterChange} />
+                    </Dropdown>
+                    <Dropdown label="Details" />
+                    <TextInput
+                      value={values.otherLocations}
+                      onChange={(v) => patch({ otherLocations: v })}
+                      placeholder="Other locations"
+                    />
+                </Section>
+            )}
+ 
             {/* ---------------- Blocked ---------------- */}
-            <Section title="Blocked">
-                <Dropdown label="Initiatives" />
-                <Dropdown label="Tags" defaultOpen>
-                    <FilterList filters={blockedTags} onFilterChange={handleFilterChange} />
-                </Dropdown>
-            </Section>
+            {show("blocked") && (
+                <Section title="Blocked">
+                    <Dropdown label="Initiatives" />
+                    <Dropdown label="Tags" defaultOpen>
+                        <FilterList filters={blockedTags} onFilterChange={handleFilterChange} />
+                    </Dropdown>
+                </Section>
+            )}
         </div>
     );
+
 }
