@@ -5,6 +5,7 @@ import { testPosts } from "@/testdata/EventPostData";
 import EventList from "@/app/oldJsVersion/components/EventList"
 import FilterContent from '@/components/forms/FilterContent';
 import { FilterData } from '@/components/forms/Filter';
+import MenuContent from '@/components/forms/HamburgerContent';
 
 
 const filters: FilterData[] = [
@@ -31,7 +32,17 @@ export default function MyScenePage(){
                         blockedTags={filters}
                         onChange={(v) => console.log(v)}
                     />
-                }            
+                } 
+                menuContent={
+                    <MenuContent
+                        initiatives={[
+                            { id: "a", name: "Initiative Name", hasNotification: true, href: "/initiative/a" },
+                            { id: "b", name: "Initiative Name", href: "/initiative/b" },
+                        ]}
+                        hasUnreadNotifications={true}
+                        //onNewInitiative={() => router.push("/initiative/new")}
+                    />
+                }           
             />
             <div className='pt-12'>
                 <EventList events={events}/>

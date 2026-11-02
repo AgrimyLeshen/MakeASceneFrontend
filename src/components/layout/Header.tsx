@@ -78,8 +78,8 @@ export default function Header({navItems = defaultNav, onNavChange, activeNav, o
 
                     {/* for mobile */}
                     <div className="hidden items-center gap-3 sm:flex">
-                        <div className="h-[50px] w-[50px] translate-y-[5px] overflow-hidden rounded-full bg-text ring-4 ring-header">
-                            <img src="logo.svg" alt="logo" className="h-full w-full object-cover" />
+                        <div className="h-[50px] w-[50px] translate-y-[5px] overflow-hidden rounded-full bg-header ring-4 ring-header">
+                            <img src="/logo.svg" alt="logo" className="h-full w-full object-cover" />
                         </div>
                         <span className="whitespace-nowrap text-[22px] font-bold text-text">
                             {title}
@@ -125,7 +125,7 @@ export default function Header({navItems = defaultNav, onNavChange, activeNav, o
                             aria-expanded={mobileSearchOpen}
                             className="flex h-10 w-10 items-center justify-center rounded-md hover:bg-white/10 sm:hidden"
                         >
-                            <img src="search.svg" alt="search" className="h-5 w-5" />
+                            <img src="/search.svg" alt="search" className="h-5 w-5" />
                         </button>
 
                         <FilterSideBar
