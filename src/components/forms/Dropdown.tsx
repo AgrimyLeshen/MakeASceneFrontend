@@ -25,7 +25,7 @@ export default function Dropdown({ label, defaultOpen = false, children }: Dropd
                 onClick={() => setOpen((o) => !o)}
                 aria-expanded={open}
                 aria-controls={panelId}
-                className="flex w-full cursor-pointer items-center justify-between border-b border-white/10 py-1 text-left text-[12px] text-text hover:text-white"
+                className="flex w-full cursor-pointer items-center justify-between border-b border- py-1 text-left text-[12px] text-text hover:text-white"
             >
                 {label}
                 <svg

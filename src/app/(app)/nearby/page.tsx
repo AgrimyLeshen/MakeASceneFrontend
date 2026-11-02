@@ -31,7 +31,7 @@ export default function NearbyPage(){
                     whatTags={filters}
                     blockedTags={filters}
                     onChange={(v) => console.log(v)}
-                />
+                    />
                 }
             />
             <div className='pt-12'>

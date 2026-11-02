@@ -21,7 +21,7 @@ type FilterProps = FilterData & {
   onChange?: (id: string, state: FilterState) => void;
 };
 
-// Blocked filters are always excluded. Subscribed filters can be in any selection.
+// Blocked filters are always excluded. Subscribed filters can be in any selection
 function initialState(selection?: Selection, mark: Mark = "none"): FilterState {
   if (mark === "blocked") return { mark, selection: "exclude" };
   return { mark, selection: selection ?? "none" };
@@ -30,57 +30,60 @@ function initialState(selection?: Selection, mark: Mark = "none"): FilterState {
 
 
 /* ------------------------------------------------------------------ */
-/* Styles – ported from the old Filter.css (colors = your CSS vars)    */
+/* Styles – every color comes from global.css (--filter-* / --color-*) */
 /* ------------------------------------------------------------------ */
+ 
 
-// .filterbox.include / .exclude / .none
+// Row background per selection
 const containerBg: Record<Selection, string> = {
-  none: "bg-[color:var(--filter-default-bg)]",
-  include: "bg-[color:var(--filter-include-bg)]",
-  exclude: "bg-[color:var(--filter-exclude-bg)]",
+  none: "bg-filter-default-bg",
+  include: "bg-filter-include-bg",
+  exclude: "bg-filter-exclude-bg",
 };
-
-// Border of the whole row, only used for subscribed / blocked
+ 
+// Row border, only used for subscribed / blocked
 const containerBorder: Record<Mark, string> = {
   none: "border-transparent",
-  subscribed: "border-[#6f98ab]",
-  blocked: "border-[#5b2142]",
+  subscribed: "border-icons-light",
+  blocked: "border-filter-exclude-x-border",
 };
-
-// .check.active / .deactivated / .default
-// The 12px "halo" around the active button was `outline: 12px solid …`.
-// A spread box-shadow looks the same, but paints *below* later siblings,
-// so the name text stays on top of it.
+ 
+// Include (check) button.
 const includeBtn: Record<Selection, string> = {
   include:
-    "bg-[color:var(--filter-include-check-bg)] text-[color:var(--filter-include-check)] shadow-[0_0_0_8px_var(--filter-include-check-border)]",
+    "bg-filter-include-check-bg text-filter-include-check shadow-[0_0_0_8px_var(--filter-include-check-border)]",
   exclude:
-    "bg-[color:var(--filter-exclude-check-bg)] text-[color:var(--filter-exclude-check)]",
-  none: "bg-[color:var(--filter-default-check-bg)] text-[color:var(--filter-default-check)]",
+    "bg-filter-exclude-check-bg text-filter-exclude-check",
+  none: "bg-filter-default-check-bg text-filter-default-check",
 };
-
-// .x.active / .deactivated / .default
+ 
+// Exclude (x) button
 const excludeBtn: Record<Selection, string> = {
   exclude:
-    "bg-[color:var(--filter-exclude-x-bg)] text-[color:var(--filter-default-x)] shadow-[0_0_0_8px_var(--filter-exclude-x-border)]",
+    "bg-filter-exclude-x-bg text-filter-exclude-x shadow-[0_0_0_8px_var(--filter-exclude-x-border)]",
   include:
-    "bg-[color:var(--filter-include-x-bg)] text-[color:var(--filter-include-x)]",
-  none: "bg-[color:var(--filter-default-x-bg)] text-[color:var(--filter-default-x)]",
+    "bg-filter-include-x-bg text-filter-include-x",
+  none: "bg-filter-default-x-bg text-filter-default-x",
 };
-
+ 
 const focusRing =
   "focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white/60";
-
-
+ 
+ 
 // subscribe / block button
 const sideButton =
-  `relative z-10 flex h-full w-8 shrink-0 cursor-pointer items-center justify-center bg-[#12425b] ${focusRing}`;
-
-
+  `relative z-10 flex h-full w-8 shrink-0 cursor-pointer items-center justify-center bg-header ${focusRing}`;
+ 
+// icon colors for the subscribe / block buttons
+const sideIconIdle = "text-sidebar hover:text-icons-light";
+const subscribedIcon = "text-icons-dark";
+const blockedIcon = "text-filter-exclude-x-bg";
+ 
+ 
 // include / exclude button
 const mainButton =
   `flex h-[115%] w-9 shrink-0 cursor-pointer items-center justify-center transition-[background-color,color,box-shadow] duration-200 disabled:cursor-not-allowed ${focusRing}`;
-
+ 
 /* ------------------------------------------------------------------ */
 
 
@@ -97,14 +100,14 @@ export function Filter({ id, name, selection, mark, onChange }: FilterProps) {
   const isBlocked = state.mark === "blocked";
   const isSubscribed = state.mark === "subscribed";
 
-  // Include / exclude toggle. Blocked filters are locked to exclude.
+  // Include / exclude toggle. Blocked filters are locked to exclude
   const toggleSelection = (target: "include" | "exclude") => {
     if (isBlocked) return;
     update({ ...state, selection: state.selection === target ? "none" : target });
   };
 
-  // Subscribe / block toggle. Subscribing leaves the selection alone.
-  // Blocking forces exclude, and unblocking resets the selection to none.
+  // Subscribe / block toggle. Subscribing leaves the selection alone
+  // Blocking forces exclude, and unblocking resets the selection to none
   const toggleMark = (target: "subscribed" | "blocked") => {
     if (state.mark === target) {
       update({ mark: "none", selection: target === "blocked" ? "none" : state.selection });

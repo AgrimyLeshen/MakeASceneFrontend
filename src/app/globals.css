@@ -31,6 +31,7 @@
   --text-search: #01161E;
 
 
+  --filter-default-bg: #124559;
   --filter-button-bg: #15536C;
 
   --filter-include-bg: #125859;
@@ -76,27 +77,26 @@
 
 
 
-  --filter-text: var(--text);
+  --color-filter-text: var(--filter-text);
 
-  --filter-default-bg: var(--header);
-  --filter-default-check-bg: var(--filter-button-bg);
-  --filter-default-x-bg: var(--filter-button-bg);
-  --filter-default-check: var(--icons);
-  --filter-default-x: var(--icons);
+  --color-filter-default-bg: var(--filter-default-bg);
+  --color-filter-default-check-bg: var(--filter-default-check-bg);
+  --color-filter-default-x-bg: var(--filter-default-x-bg);
+  --color-filter-default-check: var(--filter-default-check);
+  --color-filter-default-x: var(--filter-default-x);
 
-  --filter-include-bg: var(--color-teal-medium);
-  --filter-include-check-bg: var(--color-sage);
-  --filter-include-check-border: var(--color-teal-light);
-  --filter-include-x-bg: var(--color-teal-dark);
-  --filter-include-check: var(--icons);
-  --filter-include-x: var(--color-light-blue);
+  --color-filter-include-bg: var(--filter-include-bg);
+  --color-filter-include-check-bg: var(--filter-include-check-bg);
+  --color-filter-include-check: var(--filter-include-check);
+  --color-filter-include-x-bg: var(--filter-include-x-bg);
+  --color-filter-include-x: var(--filter-include-x);
 
-  --filter-exclude-bg: var(--color-purple);
-  --filter-exclude-check-bg: var(--color-gray-blue);
-  --filter-exclude-x-bg: var(--color-magenta);
-  --filter-exclude-x-border: var(--color-burgundy);
-  --filter-exclude-check: var(--color-light-blue);
-  --filter-exclude-x: var(--icons);
+  --color-filter-exclude-bg: var(--filter-exclude-bg);
+  --color-filter-exclude-check-bg: var(--filter-exclude-check-bg);
+  --color-filter-exclude-check: var(--filter-exclude-check);
+  --color-filter-exclude-x-bg: var(--filter-exclude-x-bg);
+  --color-filter-exclude-x: var(--filter-exclude-x);
+  --color-filter-exclude-x-border: var(--filter-exclude-x-border);
 
 
   /* font classes (import via layout.tsx) */
