@@ -54,7 +54,7 @@ const includeBtn: Record<Selection, string> = {
     "bg-filter-include-check-bg text-filter-include-check shadow-[0_0_0_8px_var(--filter-include-check-border)]",
   exclude:
     "bg-filter-exclude-check-bg text-filter-exclude-check",
-  none: "bg-filter-default-check-bg text-filter-default-check",
+  none: "bg-filter-button-bg text-filter-default-check",
 };
  
 // Exclude (x) button
@@ -63,7 +63,7 @@ const excludeBtn: Record<Selection, string> = {
     "bg-filter-exclude-x-bg text-filter-exclude-x shadow-[0_0_0_8px_var(--filter-exclude-x-border)]",
   include:
     "bg-filter-include-x-bg text-filter-include-x",
-  none: "bg-filter-default-x-bg text-filter-default-x",
+  none: "bg-filter-button-bg text-filter-default-x",
 };
  
 const focusRing =

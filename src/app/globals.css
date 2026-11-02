@@ -80,6 +80,7 @@
   --color-filter-text: var(--filter-text);
 
   --color-filter-default-bg: var(--filter-default-bg);
+  --color-filter-button-bg: var(--filter-button-bg);
   --color-filter-default-check-bg: var(--filter-default-check-bg);
   --color-filter-default-x-bg: var(--filter-default-x-bg);
   --color-filter-default-check: var(--filter-default-check);

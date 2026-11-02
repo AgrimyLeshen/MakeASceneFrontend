@@ -6,6 +6,7 @@ import EventList from "@/app/oldJsVersion/components/EventList"
 import ThemeScope from '@/components/ui/ThemeScope';
 import FilterContent from '@/components/forms/FilterContent';
 import { FilterData } from '@/components/forms/Filter';
+import MenuContent from '@/components/forms/HamburgerContent';
 
 const filters: FilterData[] = [
   { id: "music", name: "Musik" },                                   // none
@@ -22,7 +23,7 @@ export default function GetInvolvedPage(){
     const [events, setEvents] = useState(testPosts);
 
     return(
-        <ThemeScope themeId='forest'>
+        <ThemeScope themeId='midnight'>
             <Header
                 filterContent={
                     <FilterContent
@@ -34,6 +35,16 @@ export default function GetInvolvedPage(){
                         onChange={(v) => console.log(v)}
                     />
                 }
+                menuContent={
+                    <MenuContent
+                        initiatives={[
+                            { id: "a", name: "Initiative Name", hasNotification: true, href: "/initiative/a" },
+                            { id: "b", name: "Initiative Name", href: "/initiative/b" },
+                        ]}
+                        hasUnreadNotifications={true}
+                        //onNewInitiative={() => router.push("/initiative/new")}
+                    />
+                }          
             />
             <div className='pt-12'>
                 <p className='text-white'>involment</p>

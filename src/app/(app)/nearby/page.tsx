@@ -6,6 +6,8 @@ import EventList from "@/app/oldJsVersion/components/EventList"
 import { Filter, FilterData, FilterState } from "@/components/forms/Filter";
 import FilterList from '@/components/forms/FilterList';
 import FilterContent from '@/components/forms/FilterContent';
+import MenuContent from '@/components/forms/HamburgerContent';
+import ThemeScope from '@/components/ui/ThemeScope';
 
 
 const filters: FilterData[] = [
@@ -22,7 +24,7 @@ export default function NearbyPage(){
     const [events, setEvents] = useState(testPosts);
 
     return(
-        <>
+        <ThemeScope themeId='sunset'>
             <Header
                 filterContent={
                     <FilterContent
@@ -34,10 +36,20 @@ export default function NearbyPage(){
                         onChange={(v) => console.log(v)}
                     />
                 }
+                menuContent={
+                    <MenuContent
+                        initiatives={[
+                            { id: "a", name: "Initiative Name", hasNotification: true, href: "/initiative/a" },
+                            { id: "b", name: "Initiative Name", href: "/initiative/b" },
+                        ]}
+                        hasUnreadNotifications={true}
+                        //onNewInitiative={() => router.push("/initiative/new")}
+                    />
+                }          
             />
             <div className='pt-12'>
             </div>
-        </>
+        </ThemeScope>
     );
 
 };
