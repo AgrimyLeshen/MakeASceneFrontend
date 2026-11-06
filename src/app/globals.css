@@ -30,6 +30,27 @@
   --text-muted: #AEC3B0;
   --text-search: #01161E;
 
+
+  --filter-default-bg: #124559;
+  --filter-button-bg: #15536C;
+
+  --filter-include-bg: #125859;
+  --filter-include-check-bg: #22B26F;
+  --filter-include-check-border: #1C8169;
+  --filter-include-x-bg: #0D3D46;
+  --filter-include-x:#808080;
+
+  --filter-exclude-bg: #2F2D3D;
+  --filter-exclude-check-bg: #1C1C3A;
+  --filter-exclude-x-bg: #A81E49;
+  --filter-exclude-x-border: #4B2640;
+  --filter-exclude-check: #808080;
+
+  --event-header: #1F1F1F;
+  --event-header-text: #EFF6E0;
+  --event-header-icons: #EFF6E0;
+
+
   /*--link:
   --link-hover: */
 }
@@ -58,6 +79,34 @@
   --color-text-muted: var(--text-muted);
   --color-text-search: var(--text-search);
 
+
+
+  --color-filter-text: var(--filter-text);
+
+  --color-filter-default-bg: var(--filter-default-bg);
+  --color-filter-button-bg: var(--filter-button-bg);
+  --color-filter-default-check-bg: var(--filter-default-check-bg);
+  --color-filter-default-x-bg: var(--filter-default-x-bg);
+  --color-filter-default-check: var(--filter-default-check);
+  --color-filter-default-x: var(--filter-default-x);
+
+  --color-filter-include-bg: var(--filter-include-bg);
+  --color-filter-include-check-bg: var(--filter-include-check-bg);
+  --color-filter-include-check: var(--filter-include-check);
+  --color-filter-include-x-bg: var(--filter-include-x-bg);
+  --color-filter-include-x: var(--filter-include-x);
+
+  --color-filter-exclude-bg: var(--filter-exclude-bg);
+  --color-filter-exclude-check-bg: var(--filter-exclude-check-bg);
+  --color-filter-exclude-check: var(--filter-exclude-check);
+  --color-filter-exclude-x-bg: var(--filter-exclude-x-bg);
+  --color-filter-exclude-x: var(--filter-exclude-x);
+  --color-filter-exclude-x-border: var(--filter-exclude-x-border);
+
+
+  --color-event-header: var(--event-header);
+  --color-event-header-text: var(--event-header-text);
+  --color-event-header-icons: var(--event-header-icons);
 
   /* font classes (import via layout.tsx) */
   --font-sans: var(--font-inter), Arial, Helvetica, sans-serif;

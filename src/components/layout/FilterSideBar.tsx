@@ -6,11 +6,7 @@ interface SettingsButtonProps {
   controls?: string;
 }
 
-export default function FilterSideBar({
-  isOpen,
-  onClick,
-  controls,
-}: SettingsButtonProps) {
+export default function FilterSideBar({isOpen,onClick,controls,}: SettingsButtonProps) {
   return (
     <button
       type="button"
