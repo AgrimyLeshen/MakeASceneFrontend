@@ -46,6 +46,10 @@
   --filter-exclude-x-border: #4B2640;
   --filter-exclude-check: #808080;
 
+  --event-header: #1F1F1F;
+  --event-header-text: #EFF6E0;
+  --event-header-icons: #EFF6E0;
+
 
   /*--link:
   --link-hover: */
@@ -99,6 +103,10 @@
   --color-filter-exclude-x: var(--filter-exclude-x);
   --color-filter-exclude-x-border: var(--filter-exclude-x-border);
 
+
+  --color-event-header: var(--event-header);
+  --color-event-header-text: var(--event-header-text);
+  --color-event-header-icons: var(--event-header-icons);
 
   /* font classes (import via layout.tsx) */
   --font-sans: var(--font-inter), Arial, Helvetica, sans-serif;

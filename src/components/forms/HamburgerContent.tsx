@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { Route } from "next";
 import type { ReactNode } from "react";
+import MaskIcon from "@/components/shared/MaskIcon";
 
 
 /* ------------------------------------------------------------------ */
@@ -84,6 +85,7 @@ function Dot() {
 
 
 /** Internal paths use next/link, external URLs open in a new tab. */
+
 function MenuLink({
   href,
   active = false,
@@ -116,21 +118,6 @@ function MenuLink({
     );
 }
 
-
-function MaskIcon({ src }: { src: string }) {
-    const mask = {
-        maskImage: `url(${src})`,
-        WebkitMaskImage: `url(${src})`,
-        maskSize: "contain",
-        WebkitMaskSize: "contain",
-        maskRepeat: "no-repeat",
-        WebkitMaskRepeat: "no-repeat",
-        maskPosition: "center",
-        WebkitMaskPosition: "center",
-    } as const;
-
-    return <span aria-hidden="true" className="inline-block h-[18px] w-[18px] bg-current" style={mask} />;
-}
 
 /* ------------------------------------------------------------------ */
 /* MenuContent                                                        */

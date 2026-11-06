@@ -4,6 +4,7 @@ import { useState, type ReactNode } from "react";
 import FilterList from "./FilterList";
 import type { FilterData, FilterState } from "./Filter";
 import Dropdown from "./Dropdown";
+import DateField from "./DataField";
 
 /* ------------------------------------------------------------------ */
 /* Types                                                              */
@@ -74,28 +75,6 @@ function TextInput({value, onChange, placeholder}: {
 }
 
 
-function DateInput({value, onChange, label, min, max, invalid = false}: {
-  value: string;
-  onChange: (v: string) => void;
-  label: string;
-  min?: string;
-  max?: string;
-  invalid?: boolean;
-}) {
-  return (
-    <input
-      type="date"
-      aria-label={label}
-      aria-invalid={invalid}
-      value={value}
-      min={min}
-      max={max}
-      onChange={(e) => onChange(e.target.value)}
-      className={`${inputBase} [color-scheme:dark]`}
-    />
-  );
-}
-
 
 /* ------------------------------------------------------------------ */
 /* FilterContent                                                       */
@@ -165,19 +144,18 @@ export default function FilterContent({subscribedTags = [],locations = [],whatTa
             {show("when") && (
                 <Section title="When?">
                     <Dropdown label="Time Interval" defaultOpen />
-                    <DateInput label="From"
-                               value={values.from} 
-                               max={values.till || undefined}
-                               invalid={rangeInvalid}
-                               onChange={(v) => patch({ from: v })} 
+                    <DateField label="From"
+                      value={values.from}
+                      max={values.till || undefined}
+                      invalid={rangeInvalid}
+                      onChange={(v) => patch({ from: v })} 
                     />
                     <span className="text-[13px] text-text-muted">till</span>
- 
-                    <DateInput label="Till" 
-                               value={values.till} 
-                               min={values.from || undefined}
-                               invalid={rangeInvalid}
-                               onChange={(v) => patch({ till: v })} 
+                    <DateField label="Till"
+                      value={values.till}
+                      min={values.from || undefined}
+                      invalid={rangeInvalid}
+                      onChange={(v) => patch({ till: v })}
                     />
                     {rangeInvalid && (
                         <p role="alert" className="text-[11px] text-notification">
@@ -195,9 +173,9 @@ export default function FilterContent({subscribedTags = [],locations = [],whatTa
                     </Dropdown>
                     <Dropdown label="Details" />
                     <TextInput
-                      value={values.otherLocations}
-                      onChange={(v) => patch({ otherLocations: v })}
-                      placeholder="Other locations"
+                      value={values.otherTags}
+                      onChange={(v) => patch({ otherTags: v })}
+                      placeholder="Other Tagd"
                     />
                 </Section>
             )}
