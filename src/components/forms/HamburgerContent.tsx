@@ -5,6 +5,8 @@ import { usePathname } from "next/navigation";
 import type { Route } from "next";
 import type { ReactNode } from "react";
 import MaskIcon from "@/components/shared/MaskIcon";
+import { DEFAULT_ABOUT_LINKS } from "@/components/header/header-config-data";
+export { DEFAULT_ABOUT_LINKS };
 
 
 /* ------------------------------------------------------------------ */
@@ -29,7 +31,7 @@ export interface MenuLinkData {
   href: string;
 }
 
-interface MenuContentProps {
+export interface MenuContentProps {
   initiatives?: Initiative[];
   onNewInitiative?: () => void;
   hasUnreadNotifications?: boolean;
@@ -53,13 +55,7 @@ const yoursItems = [
 ];
 
 
-const defaultAboutLinks: MenuLinkData[] = [
-  { id: "guidelines", label: "User Guidelines", href: "/guidelines" },
-  { id: "ideas", label: "Send in your Ideas", href: "/ideas" },
-  { id: "bug", label: "Report a Bug", href: "/report-bug" },
-  { id: "support", label: "Support us", href: "/support" },
-  { id: "discord", label: "Join our Discord", href: "https://discord.com" },
-];
+
 
 
 /* ------------------------------------------------------------------ */
@@ -123,7 +119,7 @@ function MenuLink({
 /* MenuContent                                                        */
 /* ------------------------------------------------------------------ */
 
-export default function MenuContent({initiatives = [], onNewInitiative, hasUnreadNotifications = false, aboutLinks = defaultAboutLinks, sections = ALL_MENU_SECTIONS, onNavigate
+export default function MenuContent({initiatives = [], onNewInitiative, hasUnreadNotifications = false, aboutLinks = DEFAULT_ABOUT_LINKS, sections = ALL_MENU_SECTIONS, onNavigate
 }: MenuContentProps) {
 
   const pathname = usePathname();

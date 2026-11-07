@@ -24,7 +24,7 @@ export interface FilterValues {
   till: string;
 }
 
-interface FilterContentProps {
+export interface FilterContentProps {
   /** Initial data per list. Marks decide the look: use mark "subscribed" / "blocked". */
   subscribedTags?: FilterData[];
   locations?: FilterData[];

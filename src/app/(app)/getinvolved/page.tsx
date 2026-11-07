@@ -1,12 +1,9 @@
 "use client";
-import { useState} from 'react';
-import Header from "@/components/header/Header";
-import { testPosts } from "@/testdata/EventPostData";
-import EventList from "@/app/oldJsVersion/components/EventList"
-import ThemeScope from '@/components/ui/ThemeScope';
-import FilterContent from '@/components/forms/FilterContent';
 import { FilterData } from '@/components/forms/Filter';
-import MenuContent from '@/components/forms/HamburgerContent';
+import { ALL_MENU_SECTIONS, DEFAULT_ABOUT_LINKS } from '@/components/forms/HamburgerContent';
+import ThemeScope from '@/components/ui/ThemeScope';
+import { HeaderConfigPublisher } from '@/components/header/HeaderContext';
+import type { HeaderConfig } from '@/components/header/header-config-data';
 
 const filters: FilterData[] = [
   { id: "music", name: "Musik" },                                   // none
@@ -17,39 +14,33 @@ const filters: FilterData[] = [
   { id: "spam", name: "Spam", mark: "blocked" },                    // blocked (always exclude)
 ];
 
+const headerConfig = {
+  themeId: "midnight",
+  filterContent: {
+    sections: ["what", "where", "when", "blocked"],
+    subscribedTags: filters,
+    locations: filters,
+    whatTags: filters,
+    blockedTags: filters,
+  },
+  hamburgerContent: {
+    initiatives: [
+      { id: "a", name: "Initiative Name", hasNotification: true, href: "/initiative/a" },
+      { id: "b", name: "Initiative Name", href: "/initiative/b" },
+    ],
+    hasUnreadNotifications: true,
+    aboutLinks: [...DEFAULT_ABOUT_LINKS],
+    sections: [...ALL_MENU_SECTIONS],
+  },
+} satisfies HeaderConfig;
 
-export default function GetInvolvedPage(){
-
-    const [events, setEvents] = useState(testPosts);
-
-    return(
-        <ThemeScope themeId='midnight'>
-            <Header
-                filterContent={
-                    <FilterContent
-                        sections={["what", "where", "when", "blocked"]}
-                        subscribedTags={filters}
-                        locations={filters}
-                        whatTags={filters}
-                        blockedTags={filters}
-                        onChange={(v) => console.log(v)}
-                    />
-                }
-                menuContent={
-                    <MenuContent
-                        initiatives={[
-                            { id: "a", name: "Initiative Name", hasNotification: true, href: "/initiative/a" },
-                            { id: "b", name: "Initiative Name", href: "/initiative/b" },
-                        ]}
-                        hasUnreadNotifications={true}
-                        //onNewInitiative={() => router.push("/initiative/new")}
-                    />
-                }          
-            />
-            <div className='pt-[55px]'>
-                <p className='text-white'>involment</p>
-            </div>
-        </ThemeScope>
-    );
-
-};
+export default function GetInvolvedPage() {
+  return (
+    <ThemeScope themeId="midnight">
+      <HeaderConfigPublisher path="/getinvolved" config={headerConfig} />
+      <div className="pt-[55px]">
+        <p className="text-white">involment</p>
+      </div>
+    </ThemeScope>
+  );
+}

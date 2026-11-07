@@ -1,13 +1,9 @@
 "use client";
-import { useState} from 'react';
-import Header from "@/components/header/Header";
-import { testPosts } from "@/testdata/EventPostData";
-import EventList from "@/app/oldJsVersion/components/EventList"
-import { Filter, FilterData, FilterState } from "@/components/forms/Filter";
-import FilterList from '@/components/forms/FilterList';
-import FilterContent from '@/components/forms/FilterContent';
-import MenuContent from '@/components/forms/HamburgerContent';
-import ThemeScope from '@/components/ui/ThemeScope';
+import { FilterData } from "@/components/forms/Filter";
+import { ALL_MENU_SECTIONS, DEFAULT_ABOUT_LINKS } from "@/components/forms/HamburgerContent";
+import ThemeScope from "@/components/ui/ThemeScope";
+import { HeaderConfigPublisher } from "@/components/header/HeaderContext";
+import type { HeaderConfig } from "@/components/header/header-config-data";
 
 
 const filters: FilterData[] = [
@@ -19,37 +15,31 @@ const filters: FilterData[] = [
   { id: "spam", name: "Spam", mark: "blocked" },                    // blocked (always exclude)
 ];
 
-export default function NearbyPage(){
+const headerConfig = {
+  themeId: "sunset",
+  filterContent: {
+    sections: ["what", "where", "when"],
+    subscribedTags: filters,
+    locations: filters,
+    whatTags: filters,
+    blockedTags: filters,
+  },
+  hamburgerContent: {
+    initiatives: [
+      { id: "a", name: "Initiative Name", hasNotification: true, href: "/initiative/a" },
+      { id: "b", name: "Initiative Name", href: "/initiative/b" },
+    ],
+    hasUnreadNotifications: true,
+    aboutLinks: [...DEFAULT_ABOUT_LINKS],
+    sections: [...ALL_MENU_SECTIONS],
+  },
+} satisfies HeaderConfig;
 
-    const [events, setEvents] = useState(testPosts);
-
-    return(
-        <ThemeScope themeId='sunset'>
-            <Header
-                filterContent={
-                    <FilterContent
-                        sections={["what", "where", "when"]}
-                        subscribedTags={filters}
-                        locations={filters}
-                        whatTags={filters}
-                        blockedTags={filters}
-                        onChange={(v) => console.log(v)}
-                    />
-                }
-                menuContent={
-                    <MenuContent
-                        initiatives={[
-                            { id: "a", name: "Initiative Name", hasNotification: true, href: "/initiative/a" },
-                            { id: "b", name: "Initiative Name", href: "/initiative/b" },
-                        ]}
-                        hasUnreadNotifications={true}
-                        //onNewInitiative={() => router.push("/initiative/new")}
-                    />
-                }          
-            />
-            <div className='pt-[55px]'>
-            </div>
-        </ThemeScope>
-    );
-
-};
+export default function NearbyPage() {
+  return (
+    <ThemeScope themeId="sunset">
+      <HeaderConfigPublisher path="/nearby" config={headerConfig} />
+      <div className="pt-[55px]" />
+    </ThemeScope>
+  );
+}

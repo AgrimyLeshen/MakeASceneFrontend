@@ -2,6 +2,8 @@
 import SearchControls from "@/components/search/SearchControls";
 import EventList from "@/app/oldJsVersion/components/EventList";
 import { testPosts } from "@/testdata/EventPostData";
+import { HeaderConfigPublisher } from "@/components/header/HeaderContext";
+import { DEFAULT_HEADER_CONFIG } from "@/components/header/header-config-data";
 
 export default async function SearchEventsPage({
     searchParams,
@@ -21,6 +23,10 @@ export default async function SearchEventsPage({
 
     return (
         <>
+            <HeaderConfigPublisher
+                path="/search/initiatives"
+                config={{ ...DEFAULT_HEADER_CONFIG, initialQuery: q }}
+            />
             <SearchControls />
             <EventList events={events} />
         </>

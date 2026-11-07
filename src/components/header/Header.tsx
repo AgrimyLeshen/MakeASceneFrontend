@@ -3,12 +3,14 @@ import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import type {Route} from "next";
 
-import { useCallback, useEffect, useState, type ReactNode } from "react";
+import { useCallback, useState, type ReactNode } from "react";
+import FilterContent from "@/components/forms/FilterContent";
+import MenuContent from "@/components/forms/HamburgerContent";
+import { useHeaderConfig } from "@/components/header/HeaderContext";
 import HamburgerSideBar from "@/components/header/HamburgerSideBar";
 import FilterSideBar from "@/components/header/FilterSideBar";
 import SearchBar from "@/components/search/Searchbar";
 import SidebarOverlay from "@/components/header/SideBarOverlay";
-import MaskIcon from "@/components/shared/MaskIcon";
 
 export interface NavItem {
     id: string;
@@ -50,11 +52,22 @@ export default function Header({navItems = defaultNav, onNavChange, activeNav, o
 
     const pathname = usePathname();
     const router = useRouter();
+    const headerConfig = useHeaderConfig(pathname);
+    const queryToSync = headerConfig.initialQuery ?? initialQuery;
 
     const [content, setContent] = useState<Content>(null);
 
-    const [query, setQuery] = useState(initialQuery ?? "");
-    useEffect(() => setQuery(initialQuery ?? ""), [initialQuery]);
+    const [queryState, setQueryState] = useState(() => ({
+        source: queryToSync,
+        value: queryToSync ?? "",
+    }));
+    if (queryToSync !== undefined && queryState.source !== queryToSync) {
+        setQueryState({ source: queryToSync, value: queryToSync });
+    }
+    const query = queryState.value;
+    const setQuery = (value: string) => {
+        setQueryState((current) => ({ ...current, value }));
+    };
 
 
     const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
@@ -84,8 +97,13 @@ export default function Header({navItems = defaultNav, onNavChange, activeNav, o
     };
 
     const openSearchPage = () => {
-        if(!onSearchPage) router.push("/search/events" as Route)
-    }
+        if (onSearchPage) return;
+
+        const params = new URLSearchParams();
+        if (query.trim()) params.set("q", query.trim());
+        const qs = params.toString();
+        router.push(`/search/events${qs ? `?${qs}` : ""}` as Route);
+    };
 
     return (
         <>
@@ -180,7 +198,12 @@ export default function Header({navItems = defaultNav, onNavChange, activeNav, o
                 open={content === "menu"}
                 onClose={closePanel}
             >
-                {menuContent ?? <h2 className="text-xl font-bold">Menu</h2>}
+                {menuContent ?? (
+                    <MenuContent
+                        {...headerConfig.hamburgerContent}
+                        onNavigate={closePanel}
+                    />
+                )}
             </SidebarOverlay>
 
             <SidebarOverlay
@@ -190,7 +213,7 @@ export default function Header({navItems = defaultNav, onNavChange, activeNav, o
                 open={content === "filter"}
                 onClose={closePanel}
             >
-                {filterContent ?? <h2 className="text-xl font-bold">Filter</h2>}
+                {filterContent ?? <FilterContent {...headerConfig.filterContent} />}
             </SidebarOverlay>
         </>
     );
