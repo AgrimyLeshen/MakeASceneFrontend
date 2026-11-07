@@ -1,6 +1,6 @@
 "use client";
 import { useState} from 'react';
-import Header from "@/components/layout/Header";
+import Header from "@/components/header/Header";
 import { testPosts } from "@/testdata/EventPostData";
 import EventList from "@/app/oldJsVersion/components/EventList"
 import ThemeScope from '@/components/ui/ThemeScope';
@@ -46,7 +46,7 @@ export default function GetInvolvedPage(){
                     />
                 }          
             />
-            <div className='pt-12'>
+            <div className='pt-[55px]'>
                 <p className='text-white'>involment</p>
             </div>
         </ThemeScope>

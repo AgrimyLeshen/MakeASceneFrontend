@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { getSession, clearSession } from "@/lib/session";
-import Header from "@/components/layout/Header";
+import Header from "@/components/header/Header";
 
 type User = { id: string; email: string };
 

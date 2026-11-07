@@ -3,11 +3,12 @@ import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import type {Route} from "next";
 
-import { useCallback, useState, type ReactNode } from "react";
-import HamburgerSideBar from "@/components/layout/HamburgerSideBar";
-import FilterSideBar from "@/components/layout/FilterSideBar";
-import SearchBar from "@/components/layout/Searchbar";
-import SidebarOverlay from "@/components/layout/SideBarOverlay";
+import { useCallback, useEffect, useState, type ReactNode } from "react";
+import HamburgerSideBar from "@/components/header/HamburgerSideBar";
+import FilterSideBar from "@/components/header/FilterSideBar";
+import SearchBar from "@/components/search/Searchbar";
+import SidebarOverlay from "@/components/header/SideBarOverlay";
+import MaskIcon from "@/components/shared/MaskIcon";
 
 export interface NavItem {
     id: string;
@@ -20,6 +21,7 @@ type HeaderTypes = {
     activeNav?: string;
     onNavChange?: (id: string) => void;
     onSearch?: (query: string) => void;
+    initialQuery?: string;
 
     /** sidebar content */
     menuContent?: ReactNode;
@@ -39,17 +41,23 @@ const defaultNav: NavItem[] = [
 
 type Content = "menu" | "filter" | null;
 
-const navLinkBase =
+export const navLinkBase =
   "relative flex h-full items-center whitespace-nowrap px-3 text-[13px] transition-colors hover:text-white " +
-  "after:absolute after:inset-x-1 after:bottom-0 after:h-[3px] after:origin-left after:scale-x-0 after:bg-[#cfdde3] after:transition-transform after:duration-200 after:content-[''] hover:after:scale-x-100";
+  "after:absolute after:inset-x-1 after:bottom-0 after:h-[3px] after:origin-left after:scale-x-0 after:bg-[#cfdde3] after:transition-transform after:duration-200 after:content-[''] ";
 
   
-export default function Header({navItems = defaultNav, onNavChange, activeNav, onSearch, menuContent, filterContent, logoSrc = "/images/image.png", title = "MakeAScene",}: HeaderTypes) {
+export default function Header({navItems = defaultNav, onNavChange, activeNav, onSearch, menuContent, filterContent, initialQuery, logoSrc = "/images/image.png", title = "MakeAScene",}: HeaderTypes) {
+
+    const pathname = usePathname();
+    const router = useRouter();
 
     const [content, setContent] = useState<Content>(null);
-    const [query, setQuery] = useState("");
-    const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
 
+    const [query, setQuery] = useState(initialQuery ?? "");
+    useEffect(() => setQuery(initialQuery ?? ""), [initialQuery]);
+
+
+    const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
 
     const toggle = (target: Exclude<Content, null>) =>
         setContent((current) => (current === target ? null : target));
@@ -57,14 +65,27 @@ export default function Header({navItems = defaultNav, onNavChange, activeNav, o
 
     const closePanel = useCallback(() => setContent(null), []);
 
-    const router = useRouter();
-    const pathname = usePathname();
-
     const isItemActive = (item: NavItem) => !!item.href && (pathname == item.href || pathname.startsWith(item.href + "/"));
+
+
+    const onSearchPage = pathname.startsWith("/search");
 
     const handleSearch = (q: string) => {
         const trimmed = q.trim();
+
+        const params = new URLSearchParams(onSearchPage ? window.location.search : "");
+        if(trimmed) params.set("q", trimmed);
+        else params.delete("q")
+
+        const base = onSearchPage ? pathname : "/search/events";
+        const qs = params.toString();
+        router.push(`${base}${qs ? `?${qs}` : ""}` as Route);
+        onSearch?.(trimmed);
     };
+
+    const openSearchPage = () => {
+        if(!onSearchPage) router.push("/search/events" as Route)
+    }
 
     return (
         <>
@@ -114,6 +135,7 @@ export default function Header({navItems = defaultNav, onNavChange, activeNav, o
                             value={query}
                             onChange={setQuery}
                             onSubmit={handleSearch}
+                            onFocus={openSearchPage}
                             className="hidden w-[clamp(150px,20vw,350px)] sm:flex"
                         />
 

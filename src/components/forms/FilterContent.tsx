@@ -3,8 +3,8 @@
 import { useState, type ReactNode } from "react";
 import FilterList from "./FilterList";
 import type { FilterData, FilterState } from "./Filter";
-import Dropdown from "./Dropdown";
-import DateField from "./DataField";
+import Dropdown from "@/components/shared/Dropdown";
+import DateField from "@/components/shared/DataField";
 
 /* ------------------------------------------------------------------ */
 /* Types                                                              */

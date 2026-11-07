@@ -1,5 +1,7 @@
 "use client";
 
+import MaskIcon from "../shared/MaskIcon";
+
 interface SettingsButtonProps {
   isOpen: boolean;
   onClick: () => void;
@@ -18,7 +20,9 @@ export default function FilterSideBar({isOpen,onClick,controls,}: SettingsButton
         isOpen ? "bg-white/10" : ""
       }`}
     >
-      <img src="settings.svg" className="h-6 w-6" />
+      <span className="top-1/2 flex text-icons">
+        <MaskIcon src="/settings.svg" className="h-6 w-6"/>
+      </span>
     </button>
   );
 }

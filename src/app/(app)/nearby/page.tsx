@@ -1,6 +1,6 @@
 "use client";
 import { useState} from 'react';
-import Header from "@/components/layout/Header";
+import Header from "@/components/header/Header";
 import { testPosts } from "@/testdata/EventPostData";
 import EventList from "@/app/oldJsVersion/components/EventList"
 import { Filter, FilterData, FilterState } from "@/components/forms/Filter";
@@ -47,7 +47,7 @@ export default function NearbyPage(){
                     />
                 }          
             />
-            <div className='pt-12'>
+            <div className='pt-[55px]'>
             </div>
         </ThemeScope>
     );
