@@ -233,7 +233,7 @@ export const testPosts: Post[] = [
         isFavorite: true,
     },
     {
-        id: "post-004",
+        id: "post-007",
         layoutType: "basic",
         name: "Summer Garden Festival",
         location: "Stadtpark, Nuremberg",
@@ -268,7 +268,7 @@ export const testPosts: Post[] = [
     },
 
     {
-        id: "post-005",
+        id: "post-008",
         layoutType: "basic",
         name: "Creative Meetup",
         location: "Kreativzentrum, Nuremberg",
@@ -301,7 +301,7 @@ export const testPosts: Post[] = [
     },
 
     {
-        id: "post-006",
+        id: "post-009",
         layoutType: "basic",
         name: "Morning at the Lake",
         location: "Dutzendteich, Nuremberg",

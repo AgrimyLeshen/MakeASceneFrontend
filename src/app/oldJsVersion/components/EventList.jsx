@@ -52,18 +52,18 @@ export default function EventList({ events }) {
   }, [events, width]);
 
   return (
-    <div className="feed">
-      <div className="eventBlock" style={{ display: "flex", gap: "16px" }}>
-        {columns.map((col, colIdx) => (
-          <div key={colIdx} style={{ flex: 1 }}>
-            {col.map((event, idx) => (
-              <div key={event.id ?? idx} className="event-wrapper">
-                <EventCard post={event} />
-              </div>
-            ))}
+    <div className="feed w-full">
+  <div className="flex flex-row justify-center items-start gap-4">
+    {columns.map((col, colIdx) => (
+      <div key={colIdx} className="flex-1">
+        {col.map((event, idx) => (
+          <div key={event.id ?? idx} className="mb-4">
+            <EventCard post={event} />
           </div>
         ))}
       </div>
-    </div>
+    ))}
+  </div>
+</div>
   );
 }

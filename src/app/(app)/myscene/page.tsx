@@ -2,10 +2,11 @@
 import { useState} from 'react';
 import Header from "@/components/layout/Header";
 import { testPosts } from "@/testdata/EventPostData";
-import EventList from "@/app/oldJsVersion/components/EventList"
+import EventList from "@/components/events/EventList"
 import FilterContent from '@/components/forms/FilterContent';
 import { FilterData } from '@/components/forms/Filter';
 import MenuContent from '@/components/forms/HamburgerContent';
+import PageContent from '@/components/layout/PageContent';
 
 
 const filters: FilterData[] = [
@@ -44,9 +45,9 @@ export default function MyScenePage(){
                     />
                 }           
             />
-            <div className='pt-12'>
+            <PageContent className='mt-20'>
                 <EventList events={events}/>
-            </div>
+            </PageContent>
         </>
     );
 };

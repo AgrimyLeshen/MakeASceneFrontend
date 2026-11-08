@@ -63,7 +63,7 @@ export default function PageContent({
     }
 
     return (
-        <div className={`mx-auto w-full max-w-screen-2xl ${gutterClasses} ${className}`}>
+        <div className={`mx-auto w-full max-w-full ${gutterClasses} transition-[padding] duration-200 ease-linear ${className}`}>
             {children}
         </div>
     );
