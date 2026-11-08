@@ -6,31 +6,21 @@
 .topShape {
     position: absolute;
     z-index: 0;
-    inset: 0 0 auto;
-    height: 40%;
+    inset: -1 0 auto;
+    left: -1%;
+    right: -1%;
+    height: 35%;
     background: var(--color-primary);
-    clip-path: polygon(0 0, 100% 0, 100% 36%, 0 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 100%);
 }
 
 .transitionShape {
     position: absolute;
     z-index: -1;
-    inset: 0;
-    background: color-mix(in srgb, var(--color-secondary) 50%, transparent);
-    clip-path: polygon(0 40%, 100% 14%, 100% 5%, 0 59%);
+    inset: -3;
+    background: color-mix(in srgb, var(--color-secondary) 65%, transparent);
+    clip-path: polygon(0 35%, 100% 0%, 100% 5%, 0 55%);
     pointer-events: none;
-}
-
-.heading {
-    color: var(--color-tertiary);
-}
-
-.heading h2 {
-    overflow-wrap: anywhere;
-}
-
-.heading p {
-    margin: 0;
 }
 
 .bottomTriangle {
@@ -47,18 +37,4 @@
     pointer-events: none;
 }
 
-.description {
-    box-sizing: border-box;
-}
 
-@media (max-width: 320px) {
-    .layout > div:last-child {
-        grid-template-columns: 43% 57%;
-        gap: 3%;
-        padding: 10% 4% 4%;
-    }
-
-    .description {
-        padding: 6px;
-    }
-}

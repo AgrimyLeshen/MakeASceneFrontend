@@ -23,25 +23,25 @@ export default function EventCardHeader({
     }
 
     return (
-        <div className="flex items-center justify-between border-b border-black bg-event-header px-[14px] py-3 [container-type:inline-size]">
-            <div className="flex min-w-0 items-center text-event-header-text gap-[10px]">
+        <div className="flex items-center justify-between bg-event-header p-1.5 [container-type:inline-size]">
+            <div className="flex min-w-0 items-center text-event-header-text gap-[2cqw]">
                 <img
                     src={post.initiativePP}
                     alt={post.initiativeName}
-                    className="h-[30px] w-[30px] shrink-0 rounded-lg object-cover"
+                    className="aspect-square w-[7cqw] shrink-0 rounded-sm object-cover"
                 />
 
-                <span className="min-w-0 font-semibold leading-[1.3] text-[clamp(10px,3.6cqw,20px)]">
+                <span className="min-w-0 font-semibold leading-[1.1] text-[clamp(8px,3.6cqw,20px)]">
                     {post.initiativeName}
                 </span>
             </div>
 
-            <div className="flex shrink-0 gap-[3px]">
+            <div className="flex shrink-0 gap-[2.5cqw]">
                 <button
                     type="button"
                     onClick={toggleFavorite}
                     aria-label={isFav ? "Remove favorite" : "Add favorite"}
-                    className={`flex h-8 w-8 flex-[0_0_32px] cursor-pointer items-center justify-center border-0 bg-transparent p-[2px] 
+                    className={`flex aspect-square h-[7cqw] cursor-pointer items-center justify-center border-0 bg-transparent
                     ${isFav ? "text-notification" : "text-event-header-icons hover:text-icons-dark"}`}
                 >
                     <MaskIcon src={(isFav ? heartFilled : heartOutline).src} />
@@ -50,7 +50,7 @@ export default function EventCardHeader({
                 <button
                     type="button"
                     aria-label="Add to calendar"
-                    className="flex h-8 w-8 flex-[0_0_32px] items-center justify-center text-event-header-icons hover:text-icons-dark border-0 bg-transparent p-[2px] cursor-pointer"
+                    className="flex aspect-square w-[7cqw] items-center justify-center text-event-header-icons hover:text-icons-dark border-0 bg-transparent cursor-pointer"
                 >
                     <MaskIcon src={calendarIcon.src} />
                 </button>
@@ -58,7 +58,7 @@ export default function EventCardHeader({
                 <button
                     type="button"
                     aria-label="More options"
-                    className="flex h-8 w-8 flex-[0_0_32px] items-center justify-center border-0 bg-transparent p-[2px] text-[20px] text-event-header-icons cursor-pointer"
+                    className="flex aspect-square w-[7cqw] items-center justify-center border-0 bg-transparent text-[clamp(12px,5cqw,20px)] text-event-header-icons cursor-pointer"
                 >
                     ⋯
                 </button>
