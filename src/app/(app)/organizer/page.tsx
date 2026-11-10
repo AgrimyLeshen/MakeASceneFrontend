@@ -1,11 +1,11 @@
 import { organizerTestData } from "@/testdata/organizer";
 import EventCard from "@/components/events/EventCard";
-import Header from "@/components/layout/Header";
+import Header from "@/components/header/Header";
 import MenuContent from '@/components/forms/HamburgerContent';
 import mapPin from "../../oldJsVersion/assets/Map pin.png";
 import contact from "../../oldJsVersion/assets/searchIcon.png";
 import globe from "../../oldJsVersion/assets/heartOutline.png";
-import PageContent from "@/components/layout/PageContent";
+import PageContent from "@/components/shared/PageContent";
 import OrganizerSection from "@/components/sections/OrganizerSections";
 
 
