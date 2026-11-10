@@ -2,8 +2,7 @@
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import type {Route} from "next";
-
-import { useCallback, useState, type ReactNode } from "react";
+import { useCallback, useState, useEffect, useRef, type ReactNode } from "react";
 import FilterContent from "@/components/forms/FilterContent";
 import MenuContent from "@/components/forms/HamburgerContent";
 import { useHeaderConfig } from "@/components/header/HeaderContext";
@@ -52,6 +51,8 @@ export default function Header({navItems = defaultNav, onNavChange, activeNav, o
 
     const pathname = usePathname();
     const router = useRouter();
+
+    const headerRef = useRef<HTMLElement>(null);
     const headerConfig = useHeaderConfig(pathname);
     const queryToSync = headerConfig.initialQuery ?? initialQuery;
 
@@ -70,18 +71,44 @@ export default function Header({navItems = defaultNav, onNavChange, activeNav, o
     };
 
 
+
     const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
 
-    const toggle = (target: Exclude<Content, null>) =>
-        setContent((current) => (current === target ? null : target));
+
+    const toggle = (target: Exclude<Content, null>) => setContent((current) => (current === target ? null : target));
 
 
     const closePanel = useCallback(() => setContent(null), []);
+
 
     const isItemActive = (item: NavItem) => !!item.href && (pathname == item.href || pathname.startsWith(item.href + "/"));
 
 
     const onSearchPage = pathname.startsWith("/search");
+
+
+    // close the mobile search bar when navigating away from search
+    // (stays open when landing on /search, incl. switching between its tabs)
+    const [prevPathname, setPrevPathname] = useState(pathname);
+    if (prevPathname !== pathname) {
+        setPrevPathname(pathname);
+    if (!onSearchPage) setMobileSearchOpen(false);
+    }
+
+    useEffect(() => {
+        const el = headerRef.current;
+        if (!el) return;
+        const update = () => document.documentElement.style.setProperty("--header-height", `${el.offsetHeight}px`);
+
+        update();
+
+        const observer = new ResizeObserver(update);
+        observer.observe(el);
+        return () => observer.disconnect();
+
+    }, []);
+
+
 
     const handleSearch = (q: string) => {
         const trimmed = q.trim();
@@ -96,6 +123,8 @@ export default function Header({navItems = defaultNav, onNavChange, activeNav, o
         onSearch?.(trimmed);
     };
 
+
+
     const openSearchPage = () => {
         if (onSearchPage) return;
 
@@ -105,9 +134,11 @@ export default function Header({navItems = defaultNav, onNavChange, activeNav, o
         router.push(`/search/events${qs ? `?${qs}` : ""}` as Route);
     };
 
+
+
     return (
         <>
-            <header className="fixed inset-x-0 top-0 z-[3000] bg-header shadow-[0_10px_20px_rgba(0,0,0,0.35)]">
+            <header ref={headerRef} className="fixed inset-x-0 top-0 z-[3000] bg-header shadow-[0_10px_20px_rgba(0,0,0,0.35)]">
                 <div className="flex h-[55px] items-center gap-2 px-[clamp(10px,2%,10px)] sm:gap-4">
                     <HamburgerSideBar
                         isOpen={content === "menu"}
@@ -178,7 +209,7 @@ export default function Header({navItems = defaultNav, onNavChange, activeNav, o
 
                 {/* for mobile */}
                 {mobileSearchOpen && (
-                    <div className="absolute inset-x-0 top-full bg-header p-3 shadow-lg sm:hidden">
+                    <div className="bg-header p-3 shadow-lg sm:hidden">
                         <SearchBar
                             value={query}
                             onChange={setQuery}
@@ -186,6 +217,7 @@ export default function Header({navItems = defaultNav, onNavChange, activeNav, o
                                 handleSearch(q);
                                 setMobileSearchOpen(false);
                             }}
+                            onFocus={openSearchPage}
                         />
                     </div>
                 )}

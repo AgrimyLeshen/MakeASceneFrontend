@@ -28,7 +28,7 @@
 
   --text: #EFF6E0;
   --text-muted: #AEC3B0;
-  --text-search: #01161E;
+  --text-search: #01161E; /*also the search icon*/
 
 
   --filter-default-bg: #124559;

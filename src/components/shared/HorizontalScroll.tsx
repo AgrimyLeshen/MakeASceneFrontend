@@ -41,6 +41,7 @@ type HorizontalScrollProps = {
     className?: string;
     backgroundColor?: string;
     accentColor?: string;
+    hideScrollbar?: boolean;
 };
 
 export default function HorizontalScroll({
@@ -48,7 +49,9 @@ export default function HorizontalScroll({
     className = "",
     backgroundColor,
     accentColor,
+    hideScrollbar = false,
 }: HorizontalScrollProps) {
+    
     const scrollRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -167,6 +170,15 @@ export default function HorizontalScroll({
         .organizer-scrollbar::-webkit-scrollbar-thumb:hover {
             filter: brightness(0.5);
         }
+
+        .organizer-scrollbar-hidden {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .organizer-scrollbar-hidden::-webkit-scrollbar {
+            display: none;
+        }
     `;
 
     return (
@@ -174,7 +186,7 @@ export default function HorizontalScroll({
             <style>{scrollbarStyles}</style>
             <div
                 ref={scrollRef}
-                className={`organizer-scrollbar w-full min-w-0 overflow-x-auto ${className}`}
+                className={`${hideScrollbar ? "organizer-scrollbar-hidden" : "organizer-scrollbar"} w-full min-w-0 overflow-x-auto ${className}`}
                 style={
                     {
                         "--scrollbar-bg": backgroundColor,

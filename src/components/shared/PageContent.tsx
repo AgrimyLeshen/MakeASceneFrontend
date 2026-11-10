@@ -40,6 +40,9 @@ type PageContentProps = {
     scrollable?: boolean;
     backgroundColor?: string;
     accentColor?: string;
+    /* false = no left/right gutters (default: true) */
+    gutter?: boolean;
+    hideScrollbar?: boolean;
 };
 
 const gutterClasses =
@@ -51,11 +54,16 @@ export default function PageContent({
     scrollable = false,
     backgroundColor,
     accentColor,
+    gutter = true,
+    hideScrollbar = false,
 }: PageContentProps) {
+
+    const gutters = gutter ? gutterClasses : "";
+
     if (scrollable) {
         return (
-            <HorizontalScroll className={className} backgroundColor={backgroundColor} accentColor={accentColor}>
-                <div className={`flex w-max min-w-full ${gutterClasses}`}>
+            <HorizontalScroll className={className} backgroundColor={backgroundColor} accentColor={accentColor} hideScrollbar={hideScrollbar}>
+                <div className={`flex w-max min-w-full ${gutters}`}>
                     {children}
                 </div>
             </HorizontalScroll>

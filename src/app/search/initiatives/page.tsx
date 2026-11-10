@@ -1,6 +1,6 @@
 // app/search/events/page.tsx
 import SearchControls from "@/components/search/SearchControls";
-import EventList from "@/app/oldJsVersion/components/EventList";
+import EventList from "@/components/events/EventList";
 import { testPosts } from "@/testdata/EventPostData";
 import { HeaderConfigPublisher } from "@/components/header/HeaderContext";
 import { DEFAULT_HEADER_CONFIG } from "@/components/header/header-config-data";

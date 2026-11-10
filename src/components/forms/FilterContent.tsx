@@ -175,7 +175,7 @@ export default function FilterContent({subscribedTags = [],locations = [],whatTa
                     <TextInput
                       value={values.otherTags}
                       onChange={(v) => patch({ otherTags: v })}
-                      placeholder="Other Tagd"
+                      placeholder="Other Tags"
                     />
                 </Section>
             )}

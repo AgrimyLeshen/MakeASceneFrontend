@@ -2,7 +2,8 @@
 
 import type { Route } from "next";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import SelectDropdown from "@/components/shared/SelectDropdown"; // adjust path
+import SelectDropdown from "@/components/shared/SelectDropdown"; 
+import PageContent from "../shared/PageContent";
 
 const sortOptions = [
   { value: "upcoming", label: "Upcoming Events" },
@@ -43,52 +44,54 @@ export default function SearchControls() {
   });
 
   return (
-    <div className="flex flex-wrap items-start gap-6 px-4 py-4">
-      <SelectDropdown
-        className="w-[180px]"
-        label="Sort by"
-        value={sort}
-        options={sortOptions}
-        onChange={(v) => setParam("sort", v === "upcoming" ? "" : v)}
-      />
-
-      <label className="flex w-[180px] flex-col gap-1 text-[13px] text-text">
-        Location
-        <span className="relative flex items-center">
-          <input
-            key={location}
-            type="text"
-            defaultValue={location}
-            placeholder="Any Location"
-            className={`${fieldClass} pr-9`}
-            {...commit("location")}
-          />
-          <svg
-            viewBox="0 0 24 24"
-            className="pointer-events-none absolute right-3 h-3.5 w-3.5 text-text"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            aria-hidden="true"
-          >
-            <circle cx="10.5" cy="10.5" r="6.5" />
-            <path d="M15.5 15.5L21 21" />
-          </svg>
-        </span>
-      </label>
-
-      <label className="flex w-[180px] flex-col gap-1 text-[13px] text-text">
-        Something else?
-        <input
-          key={other}
-          type="text"
-          defaultValue={other}
-          placeholder="Something"
-          className={fieldClass}
-          {...commit("other")}
+    <PageContent scrollable gutter={false} hideScrollbar className="py-5">
+      <div className="flex items-start gap-6 ">
+        <SelectDropdown
+          className="w-[180px] flex-none"
+          label="Sort by"
+          value={sort}
+          options={sortOptions}
+          onChange={(v) => setParam("sort", v === "upcoming" ? "" : v)}
         />
-      </label>
-    </div>
+
+        <label className="flex w-[180px] flex-none flex-col gap-1 text-[13px] text-text">
+          Location
+          <span className="relative flex items-center">
+            <input
+              key={location}
+              type="text"
+              defaultValue={location}
+              placeholder="Any Location"
+              className={`${fieldClass} pr-9`}
+              {...commit("location")}
+            />
+            <svg
+              viewBox="0 0 24 24"
+              className="pointer-events-none absolute right-3 h-3.5 w-3.5 text-text"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              aria-hidden="true"
+            >
+              <circle cx="10.5" cy="10.5" r="6.5" />
+              <path d="M15.5 15.5L21 21" />
+            </svg>
+          </span>
+        </label>
+
+        <label className="flex w-[180px] flex-none flex-col gap-1 text-[13px] text-text">
+          Something else?
+          <input
+            key={other}
+            type="text"
+            defaultValue={other}
+            placeholder="Something..."
+            className={fieldClass}
+            {...commit("other")}
+          />
+        </label>
+      </div>
+    </PageContent>
   );
 }

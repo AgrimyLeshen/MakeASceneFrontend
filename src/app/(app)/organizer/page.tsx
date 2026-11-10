@@ -1,33 +1,56 @@
+"use client";
+
 import { organizerTestData } from "@/testdata/organizer";
 import EventCard from "@/components/events/EventCard";
-import Header from "@/components/header/Header";
-import MenuContent from '@/components/forms/HamburgerContent';
 import mapPin from "../../oldJsVersion/assets/Map pin.png";
 import contact from "../../oldJsVersion/assets/searchIcon.png";
 import globe from "../../oldJsVersion/assets/heartOutline.png";
 import PageContent from "@/components/shared/PageContent";
 import OrganizerSection from "@/components/sections/OrganizerSections";
+import { FilterData } from '@/components/forms/Filter';
+import { ALL_SECTIONS } from '@/components/forms/FilterContent';
+import { ALL_MENU_SECTIONS, DEFAULT_ABOUT_LINKS } from '@/components/forms/HamburgerContent';
+import { HeaderConfigPublisher } from '@/components/header/HeaderContext';
+import type { HeaderConfig } from '@/components/header/header-config-data';
+import MaskIcon from "@/components/shared/MaskIcon";
 
+const filters: FilterData[] = [
+  { id: "music", name: "Musik" },                                   // none
+  { id: "sport", name: "Sport", selection: "include" },             // include
+  { id: "ads", name: "Werbung", selection: "exclude" },             // exclude
+  { id: "news", name: "News", mark: "subscribed", selection: "include" }, // subscribed + include
+  { id: "talk", name: "Talk", mark: "subscribed", selection: "exclude" }, // subscribed + exclude
+  { id: "spam", name: "Spam", mark: "blocked" },                    // blocked (always exclude)
+];
 
+const headerConfig = {
+  filterContent: {
+    sections: [...ALL_SECTIONS],
+    subscribedTags: filters,
+    locations: filters,
+    whatTags: filters,
+    blockedTags: filters,
+  },
+  hamburgerContent: {
+    initiatives: [
+      { id: "a", name: "Initiative Name", hasNotification: true, href: "/organizer" },
+      { id: "b", name: "Initiative Name", href: "/initiative/b" },
+    ],
+    hasUnreadNotifications: true,
+    aboutLinks: [...DEFAULT_ABOUT_LINKS],
+    sections: [...ALL_MENU_SECTIONS],
+  },
+} satisfies HeaderConfig;
 
 export default function OrganizerPage() {
+
     const organizer = organizerTestData;
     const [backgroundColor, accentColor, textColor] = organizer.colors;
 
     return (
         <>
-            <Header
-                menuContent={
-                    <MenuContent
-                        initiatives={[
-                            { id: "a", name: "Initiative Name", hasNotification: true, href: "/initiative/a" },
-                            { id: "b", name: "Initiative Name", href: "/initiative/b" },
-                        ]}
-                        hasUnreadNotifications={true}
-                        //onNewInitiative={() => router.push("/initiative/new")}
-                    />
-                }           
-            />
+            <HeaderConfigPublisher path="/myscene" config={headerConfig} />
+
             <div style={{ backgroundColor, color: textColor }} className="pb-16 pt-12">
                 <div className="relative w-full">
                     <img
@@ -37,7 +60,7 @@ export default function OrganizerPage() {
                     />
                 
                     <div 
-                        className="absolute top-0 left-0 flex items-center gap-3 rounded-br-lg bg-black/50 px-3 py-2 text-white"
+                        className="absolute top-0 left-0 flex items-center gap-3 rounded-br-lg bg-header/50 px-3 py-2 text-text"
                         style={{ backgroundColor: `color-mix(in srgb, ${accentColor} 80%, transparent)`, color: textColor}}
                     >
                         <img
@@ -49,26 +72,22 @@ export default function OrganizerPage() {
                     </div>
 
                     <div 
-                        className="absolute bottom-0 right-0 space-y-3 rounded-tl-lg bg-black/50 p-4 text-white text-xs"
+                        className="absolute bottom-0 right-0 space-y-3 rounded-tl-lg bg-header/50 p-4 text-text text-xs"
                         style={{ backgroundColor: `color-mix(in srgb, ${accentColor} 80%, transparent)`, color: textColor}}
                     >
                         <div className="flex items-center justify-end gap-3">
                             
                             <span>{organizer.location}</span>
-                            <img
-                                src={mapPin.src}
-                                alt="Location"
-                                className="h-4 w-4 object-contain"
-                            />
+                            <span className="top-1/2 flex text-icons" style={{ color: textColor}}>
+                                    <MaskIcon src="/locations.svg" className="h-4 w-4 object-contain"/>
+                            </span>
                         </div>
 
                         <div className="flex items-center justify-end gap-3">
                             <span>{organizer.contactInfo}</span>
-                            <img
-                                src={contact.src}
-                                alt="Contact"
-                                className="h-4 w-4 object-contain"
-                            />
+                            <span className="top-1/2 flex text-icons" style={{ color: textColor}}>
+                                    <MaskIcon src="/contact.svg" className="h-4 w-4 object-contain"/>
+                            </span>
                         </div>
 
                         <div className="flex items-center justify-end gap-3">
@@ -80,11 +99,9 @@ export default function OrganizerPage() {
                             >
                                 {organizer.website}
                             </a>
-                            <img
-                                src={globe.src}
-                                alt="Website"
-                                className="h-4 w-4 object-contain"
-                            />
+                            <span className="top-1/2 flex text-icons" style={{ color: textColor}}>
+                                    <MaskIcon src="/globe.svg" className="h-4 w-4 object-contain"/>
+                            </span>
                         </div>
                     </div>
                 </div>

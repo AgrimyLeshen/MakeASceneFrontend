@@ -28,7 +28,7 @@ const headerConfig = {
   },
   hamburgerContent: {
     initiatives: [
-      { id: "a", name: "Initiative Name", hasNotification: true, href: "/initiative/a" },
+      { id: "a", name: "Initiative Name", hasNotification: true, href: "/organizer" },
       { id: "b", name: "Initiative Name", href: "/initiative/b" },
     ],
     hasUnreadNotifications: true,
@@ -36,6 +36,7 @@ const headerConfig = {
     sections: [...ALL_MENU_SECTIONS],
   },
 } satisfies HeaderConfig;
+
 
 export default function MyScenePage() {
   const events = testPosts;

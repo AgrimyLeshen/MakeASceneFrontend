@@ -1,4 +1,5 @@
 "use client";
+
 import { FilterData } from "@/components/forms/Filter";
 import { ALL_MENU_SECTIONS, DEFAULT_ABOUT_LINKS } from "@/components/forms/HamburgerContent";
 import ThemeScope from "@/components/ui/ThemeScope";
