@@ -4,10 +4,13 @@ import Link from "next/link";
 import type {Route} from "next";
 
 import { useCallback, useState, type ReactNode } from "react";
-import HamburgerSideBar from "@/components/layout/HamburgerSideBar";
-import FilterSideBar from "@/components/layout/FilterSideBar";
-import SearchBar from "@/components/layout/Searchbar";
-import SidebarOverlay from "@/components/layout/SideBarOverlay";
+import FilterContent from "@/components/forms/FilterContent";
+import MenuContent from "@/components/forms/HamburgerContent";
+import { useHeaderConfig } from "@/components/header/HeaderContext";
+import HamburgerSideBar from "@/components/header/HamburgerSideBar";
+import FilterSideBar from "@/components/header/FilterSideBar";
+import SearchBar from "@/components/search/Searchbar";
+import SidebarOverlay from "@/components/header/SideBarOverlay";
 
 export interface NavItem {
     id: string;
@@ -20,6 +23,7 @@ type HeaderTypes = {
     activeNav?: string;
     onNavChange?: (id: string) => void;
     onSearch?: (query: string) => void;
+    initialQuery?: string;
 
     /** sidebar content */
     menuContent?: ReactNode;
@@ -39,17 +43,34 @@ const defaultNav: NavItem[] = [
 
 type Content = "menu" | "filter" | null;
 
-const navLinkBase =
+export const navLinkBase =
   "relative flex h-full items-center whitespace-nowrap px-3 text-[13px] transition-colors hover:text-white " +
-  "after:absolute after:inset-x-1 after:bottom-0 after:h-[3px] after:origin-left after:scale-x-0 after:bg-[#cfdde3] after:transition-transform after:duration-200 after:content-[''] hover:after:scale-x-100";
+  "after:absolute after:inset-x-1 after:bottom-0 after:h-[3px] after:origin-left after:scale-x-0 after:bg-[#cfdde3] after:transition-transform after:duration-200 after:content-[''] ";
 
   
-export default function Header({navItems = defaultNav, onNavChange, activeNav, onSearch, menuContent, filterContent, logoSrc = "/images/image.png", title = "MakeAScene",}: HeaderTypes) {
+export default function Header({navItems = defaultNav, onNavChange, activeNav, onSearch, menuContent, filterContent, initialQuery, logoSrc = "/images/image.png", title = "MakeAScene",}: HeaderTypes) {
+
+    const pathname = usePathname();
+    const router = useRouter();
+    const headerConfig = useHeaderConfig(pathname);
+    const queryToSync = headerConfig.initialQuery ?? initialQuery;
 
     const [content, setContent] = useState<Content>(null);
-    const [query, setQuery] = useState("");
-    const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
 
+    const [queryState, setQueryState] = useState(() => ({
+        source: queryToSync,
+        value: queryToSync ?? "",
+    }));
+    if (queryToSync !== undefined && queryState.source !== queryToSync) {
+        setQueryState({ source: queryToSync, value: queryToSync });
+    }
+    const query = queryState.value;
+    const setQuery = (value: string) => {
+        setQueryState((current) => ({ ...current, value }));
+    };
+
+
+    const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
 
     const toggle = (target: Exclude<Content, null>) =>
         setContent((current) => (current === target ? null : target));
@@ -57,13 +78,31 @@ export default function Header({navItems = defaultNav, onNavChange, activeNav, o
 
     const closePanel = useCallback(() => setContent(null), []);
 
-    const router = useRouter();
-    const pathname = usePathname();
-
     const isItemActive = (item: NavItem) => !!item.href && (pathname == item.href || pathname.startsWith(item.href + "/"));
+
+
+    const onSearchPage = pathname.startsWith("/search");
 
     const handleSearch = (q: string) => {
         const trimmed = q.trim();
+
+        const params = new URLSearchParams(onSearchPage ? window.location.search : "");
+        if(trimmed) params.set("q", trimmed);
+        else params.delete("q")
+
+        const base = onSearchPage ? pathname : "/search/events";
+        const qs = params.toString();
+        router.push(`${base}${qs ? `?${qs}` : ""}` as Route);
+        onSearch?.(trimmed);
+    };
+
+    const openSearchPage = () => {
+        if (onSearchPage) return;
+
+        const params = new URLSearchParams();
+        if (query.trim()) params.set("q", query.trim());
+        const qs = params.toString();
+        router.push(`/search/events${qs ? `?${qs}` : ""}` as Route);
     };
 
     return (
@@ -114,6 +153,7 @@ export default function Header({navItems = defaultNav, onNavChange, activeNav, o
                             value={query}
                             onChange={setQuery}
                             onSubmit={handleSearch}
+                            onFocus={openSearchPage}
                             className="hidden w-[clamp(150px,20vw,350px)] sm:flex"
                         />
 
@@ -158,7 +198,12 @@ export default function Header({navItems = defaultNav, onNavChange, activeNav, o
                 open={content === "menu"}
                 onClose={closePanel}
             >
-                {menuContent ?? <h2 className="text-xl font-bold">Menu</h2>}
+                {menuContent ?? (
+                    <MenuContent
+                        {...headerConfig.hamburgerContent}
+                        onNavigate={closePanel}
+                    />
+                )}
             </SidebarOverlay>
 
             <SidebarOverlay
@@ -168,7 +213,7 @@ export default function Header({navItems = defaultNav, onNavChange, activeNav, o
                 open={content === "filter"}
                 onClose={closePanel}
             >
-                {filterContent ?? <h2 className="text-xl font-bold">Filter</h2>}
+                {filterContent ?? <FilterContent {...headerConfig.filterContent} />}
             </SidebarOverlay>
         </>
     );

@@ -1,12 +1,12 @@
 "use client";
-import { useState} from 'react';
-import Header from "@/components/layout/Header";
 import { testPosts } from "@/testdata/EventPostData";
-import EventList from "@/components/events/EventList"
-import FilterContent from '@/components/forms/FilterContent';
+import EventList from "@/components/events/EventList";
+import PageContent from '@/components/shared/PageContent';
 import { FilterData } from '@/components/forms/Filter';
-import MenuContent from '@/components/forms/HamburgerContent';
-import PageContent from '@/components/layout/PageContent';
+import { ALL_SECTIONS } from '@/components/forms/FilterContent';
+import { ALL_MENU_SECTIONS, DEFAULT_ABOUT_LINKS } from '@/components/forms/HamburgerContent';
+import { HeaderConfigPublisher } from '@/components/header/HeaderContext';
+import type { HeaderConfig } from '@/components/header/header-config-data';
 
 
 const filters: FilterData[] = [
@@ -18,33 +18,31 @@ const filters: FilterData[] = [
   { id: "spam", name: "Spam", mark: "blocked" },                    // blocked (always exclude)
 ];
 
-export default function MyScenePage(){
+const headerConfig = {
+  filterContent: {
+    sections: [...ALL_SECTIONS],
+    subscribedTags: filters,
+    locations: filters,
+    whatTags: filters,
+    blockedTags: filters,
+  },
+  hamburgerContent: {
+    initiatives: [
+      { id: "a", name: "Initiative Name", hasNotification: true, href: "/initiative/a" },
+      { id: "b", name: "Initiative Name", href: "/initiative/b" },
+    ],
+    hasUnreadNotifications: true,
+    aboutLinks: [...DEFAULT_ABOUT_LINKS],
+    sections: [...ALL_MENU_SECTIONS],
+  },
+} satisfies HeaderConfig;
 
-    const [events, setEvents] = useState(testPosts);
+export default function MyScenePage() {
+  const events = testPosts;
 
     return(
         <>
-            <Header
-                filterContent={
-                    <FilterContent
-                        subscribedTags={filters}
-                        locations={filters}
-                        whatTags={filters}
-                        blockedTags={filters}
-                        onChange={(v) => console.log(v)}
-                    />
-                } 
-                menuContent={
-                    <MenuContent
-                        initiatives={[
-                            { id: "a", name: "Initiative Name", hasNotification: true, href: "/initiative/a" },
-                            { id: "b", name: "Initiative Name", href: "/initiative/b" },
-                        ]}
-                        hasUnreadNotifications={true}
-                        //onNewInitiative={() => router.push("/initiative/new")}
-                    />
-                }           
-            />
+            <HeaderConfigPublisher path="/myscene" config={headerConfig} />
             <PageContent className='mt-20'>
                 <EventList events={events}/>
             </PageContent>

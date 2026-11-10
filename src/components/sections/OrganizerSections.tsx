@@ -1,7 +1,7 @@
 
 import type { Sections } from "@/testdata/organizer";
 import EventCard from "@/components/events/EventCard";
-import PageContent from "@/components/layout/PageContent";
+import PageContent from "@/components/shared/PageContent";
 
 type OrganizerSectionProps = {
     section: Sections;

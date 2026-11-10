@@ -72,7 +72,7 @@ export const themes = {
         textfield: "#7A2E4D",
         searchbar: "#FFE9D6",
         notification: "#EF5345",
-        icons: "#FFE9D6",
+        icons: "#0B0A1F",
         "icons-dark": "#D9A5A0",
         "icons-light": "#C4687F",
         text: "#FFE9D6",

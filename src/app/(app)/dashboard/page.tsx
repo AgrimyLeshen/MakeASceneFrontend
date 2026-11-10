@@ -1,6 +1,5 @@
 import { redirect } from "next/navigation";
 import { getSession, clearSession } from "@/lib/session";
-import Header from "@/components/layout/Header";
 
 type User = { id: string; email: string };
 
@@ -48,12 +47,7 @@ export default async function DashboardPage({
   }
 
   return (
-    <>
-      <Header
-        //menuPanel={<MenuContent />}
-        //filterPanel={<FilterContent />}
-      />
-      <main className="mx-auto max-w-3xl px-6 py-12">
+    <main className="mx-auto max-w-3xl px-6 pt-[calc(55px+3rem)] pb-12">
         <h1 className="text-2xl font-bold">Hallo {user.email}</h1>
 
         <form action={logout}>
@@ -61,7 +55,6 @@ export default async function DashboardPage({
             Abmelden
           </button>
         </form>
-      </main>
-    </>
+    </main>
   );
 }

@@ -1,3 +1,4 @@
+import AppShell from "@/components/header/AppShell";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -16,7 +17,7 @@ export default function RootLayout({children}: Readonly<{ children: React.ReactN
   return (
     <html lang="de" className={inter.variable}>
       <body>
-          {children}   
+        <AppShell>{children}</AppShell>
       </body>
     </html>
   );
