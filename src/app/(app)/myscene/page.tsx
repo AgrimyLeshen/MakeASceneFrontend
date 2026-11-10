@@ -1,11 +1,12 @@
 "use client";
 import { testPosts } from "@/testdata/EventPostData";
-import EventList from "@/app/oldJsVersion/components/EventList";
 import { FilterData } from '@/components/forms/Filter';
 import { ALL_SECTIONS } from '@/components/forms/FilterContent';
 import { ALL_MENU_SECTIONS, DEFAULT_ABOUT_LINKS } from '@/components/forms/HamburgerContent';
 import { HeaderConfigPublisher } from '@/components/header/HeaderContext';
 import type { HeaderConfig } from '@/components/header/header-config-data';
+import EventList from "@/components/events/EventList"
+import PageContent from '@/components/header/PageContent';
 
 
 const filters: FilterData[] = [
@@ -42,9 +43,10 @@ export default function MyScenePage() {
   return (
     <>
       <HeaderConfigPublisher path="/myscene" config={headerConfig} />
-      <div className="pt-[55px]">
-        <EventList events={events} />
-      </div>
+      <PageContent className='mt-20'>
+                <EventList events={events}/>
+            </PageContent>
     </>
   );
 }
+   
