@@ -1,4 +1,4 @@
-// app/search/events/page.tsx
+
 import SearchControls from "@/components/search/SearchControls";
 import EventList from "@/components/events/EventList";
 import { testPosts } from "@/testdata/EventPostData";

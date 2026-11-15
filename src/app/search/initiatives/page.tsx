@@ -1,11 +1,13 @@
-// app/search/events/page.tsx
+
 import SearchControls from "@/components/search/SearchControls";
-import EventList from "@/components/events/EventList";
-import { testPosts } from "@/testdata/EventPostData";
 import { HeaderConfigPublisher } from "@/components/header/HeaderContext";
 import { DEFAULT_HEADER_CONFIG } from "@/components/header/header-config-data";
+import PageContent from "@/components/shared/PageContent";
+import InitiativeList from "@/components/search/InitiativeList";
+import { parseSearchParams, searchInitiatives } from "@/lib/SearchAPI";
+import { testInitiatives } from "@/testdata/SearchTestData";
 
-export default async function SearchEventsPage({
+export default async function SearchInitiativePage({
     searchParams,
 }: {
     searchParams: Promise<{ q?: string }>;
@@ -13,14 +15,10 @@ export default async function SearchEventsPage({
     const { q = "" } = await searchParams;
     const needle = q.trim().toLowerCase();
 
-    const events = needle
-        ? testPosts.filter((p) =>
-              [p.name, p.location, p.initiativeName, ...p.tags].some((t) =>
-                  t.toLowerCase().includes(needle)
-              )
-          )
-        : testPosts;
-
+    const query = parseSearchParams(await searchParams);
+    //const initiatives = await searchInitiatives(query);
+    const initiatives = testInitiatives;
+    
     return (
         <>
             <HeaderConfigPublisher
@@ -28,7 +26,9 @@ export default async function SearchEventsPage({
                 config={{ ...DEFAULT_HEADER_CONFIG, initialQuery: q }}
             />
             <SearchControls />
-            <EventList events={events} />
+            <PageContent>
+                <InitiativeList initiatives={initiatives}/>
+            </PageContent>
         </>
     );
 }

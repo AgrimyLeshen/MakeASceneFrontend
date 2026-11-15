@@ -6,8 +6,7 @@ import type { Post } from "../../testdata/EventPostData";
 import MaskIcon from "@/components/shared/MaskIcon";
 
 import calendarIcon from "../../app/oldJsVersion/assets/addCalendar.png";
-import heartFilled from "../../app/oldJsVersion/assets/heartFilled.png";
-import heartOutline from "../../app/oldJsVersion/assets/heartOutline.png";
+
 
 type EventCardHeaderProps = {
     post: Post;
@@ -44,7 +43,7 @@ export default function EventCardHeader({
                     className={`flex aspect-square h-[7cqw] cursor-pointer items-center justify-center border-0 bg-transparent
                     ${isFav ? "text-notification" : "text-event-header-icons hover:text-icons-dark"}`}
                 >
-                    <MaskIcon src={(isFav ? heartFilled : heartOutline).src} />
+                    <MaskIcon src={isFav ? "/heartFilled.svg" : "/heartOutline.svg"} />
                 </button>
 
                 <button

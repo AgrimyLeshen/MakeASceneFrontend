@@ -1,11 +1,11 @@
-// app/search/events/page.tsx
+
 import SearchControls from "@/components/search/SearchControls";
 import EventList from "@/components/events/EventList";
 import { testPosts } from "@/testdata/EventPostData";
 import { HeaderConfigPublisher } from "@/components/header/HeaderContext";
 import { DEFAULT_HEADER_CONFIG } from "@/components/header/header-config-data";
 
-export default async function SearchEventsPage({
+export default async function SearchTagsPage({
     searchParams,
 }: {
     searchParams: Promise<{ q?: string }>;
