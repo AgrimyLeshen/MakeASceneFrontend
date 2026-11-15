@@ -1,9 +1,11 @@
 
 import SearchControls from "@/components/search/SearchControls";
-import EventList from "@/components/events/EventList";
-import { testPosts } from "@/testdata/EventPostData";
+
 import { HeaderConfigPublisher } from "@/components/header/HeaderContext";
 import { DEFAULT_HEADER_CONFIG } from "@/components/header/header-config-data";
+import { testTagResult } from "@/testdata/SearchTestData";
+import PageContent from "@/components/shared/PageContent";
+import TagList from "@/components/search/TagList";
 
 export default async function SearchTagsPage({
     searchParams,
@@ -13,13 +15,8 @@ export default async function SearchTagsPage({
     const { q = "" } = await searchParams;
     const needle = q.trim().toLowerCase();
 
-    const events = needle
-        ? testPosts.filter((p) =>
-              [p.name, p.location, p.initiativeName, ...p.tags].some((t) =>
-                  t.toLowerCase().includes(needle)
-              )
-          )
-        : testPosts;
+    // const result = await searchTags(query);
+    const result = testTagResult;
 
     return (
         <>
@@ -27,8 +24,9 @@ export default async function SearchTagsPage({
                 path="/search/tags"
                 config={{ ...DEFAULT_HEADER_CONFIG, initialQuery: q }}
             />
-            <SearchControls />
-            <EventList events={events} />
+            <PageContent>
+                <TagList result={result}/>
+            </PageContent>
         </>
     );
 }
