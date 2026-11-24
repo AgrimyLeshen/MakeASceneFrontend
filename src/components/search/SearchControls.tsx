@@ -79,18 +79,6 @@ export default function SearchControls() {
             </svg>
           </span>
         </label>
-
-        <label className="flex w-[180px] flex-none flex-col gap-1 text-[13px] text-text">
-          Something else?
-          <input
-            key={other}
-            type="text"
-            defaultValue={other}
-            placeholder="Something..."
-            className={fieldClass}
-            {...commit("other")}
-          />
-        </label>
       </div>
     </PageContent>
   );

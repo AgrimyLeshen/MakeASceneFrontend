@@ -17,7 +17,10 @@ export default async function SearchInitiativePage({
 
     const query = parseSearchParams(await searchParams);
     //const initiatives = await searchInitiatives(query);
-    const initiatives = testInitiatives;
+    
+    const initiatives = testInitiatives.filter((i) =>
+        [i.name ?? "", i.description].some((t) => t.toLowerCase().includes(needle))
+    );
     
     return (
         <>
