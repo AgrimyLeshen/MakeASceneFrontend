@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import type { Route } from "next";
-import type { Tag } from "@/components/search/Search";
+import type { Tag } from "@/lib/Search";
 import { FavoriteButton, MoreButton } from "./CardActions";
 import EventPreview from "./EventPreview";
 

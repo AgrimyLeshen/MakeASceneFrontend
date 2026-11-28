@@ -1,5 +1,5 @@
 import { testPosts, type Post } from "@/testdata/EventPostData";
-import type { Initiative, Tag, TagSearchResult } from "@/components/search/Search";
+import type { Initiative, Tag, TagSearchResult } from "@/lib/Search";
 
 /** n events starting at `start`, cycling through testPosts (so every layout shows up) */
 const pick = (start: number, n: number): Post[] =>

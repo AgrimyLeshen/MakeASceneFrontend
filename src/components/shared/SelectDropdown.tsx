@@ -48,7 +48,7 @@ export default function SelectDropdown({label,value,options,onChange,className =
         };
 
         const onScroll = (e: Event) => {
-            if (panelRef.current?.contains(e.target as Node)) return; // scrolling inside the list is fine
+            if (panelRef.current?.contains(e.target as Node)) return; 
             setOpen(false);
         };
 

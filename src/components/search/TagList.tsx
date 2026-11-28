@@ -1,6 +1,6 @@
 "use client";
 
-import type { Tag, TagSearchResult } from "@/components/search/Search";
+import type { Tag, TagSearchResult } from "@/lib/Search";
 import HoneycombGrid from "@/components/shared//HoneyCombGrid";
 import TagCard from "./TagCard";
 

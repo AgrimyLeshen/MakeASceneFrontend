@@ -1,6 +1,6 @@
 "use client";
 
-import type { Initiative } from "@/components/search/Search";
+import type { Initiative } from "@/lib/Search";
 import HoneycombGrid from "@/components/shared/HoneyCombGrid";
 import InitiativeCard from "./InitiativeCard";
 

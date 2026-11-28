@@ -1,38 +1,38 @@
-
 import SearchControls from "@/components/search/SearchControls";
-
 import { HeaderConfigPublisher } from "@/components/header/HeaderContext";
 import { DEFAULT_HEADER_CONFIG } from "@/components/header/header-config-data";
-import { testTagResult } from "@/testdata/SearchTestData";
 import PageContent from "@/components/shared/PageContent";
-import type { Tag } from "@/components/search/Search";
+import TagList from "@/components/search/TagList"; 
 import { parseSearchParams, searchTags } from "@/lib/SearchAPI";
-import TagList from "@/components/search/TagList";
+import { sortTags } from "@/lib/Sorting";
+import { SORT, type SearchControl } from "@/lib/searchControls";
+
+const DEFAULT_SORT = SORT.relevance.value;
+
+const controls: SearchControl[] = [
+    {
+        type: "select",
+        param: "sort",
+        label: "Sort by",
+        defaultValue: DEFAULT_SORT,
+        options: [SORT.relevance, SORT.alphabetical],
+    },
+];
 
 export default async function SearchTagsPage({
     searchParams,
 }: {
-    searchParams: Promise<{ q?: string }>;
+    searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
     const query = parseSearchParams(await searchParams);
-    const { q = "" } = await searchParams;
-    const needle = query.q.replace(/^#/, "").toLowerCase();
-    const matches = (t: Tag) => t.name.toLowerCase().includes(needle);
-
-    // const result = await searchTags(query);
-    const result = {
-        top: testTagResult.top.filter(matches),
-        related: testTagResult.related.filter(matches),
-    };
+    const result = sortTags(await searchTags(query), query.sort || DEFAULT_SORT);
 
     return (
         <>
-            <HeaderConfigPublisher
-                path="/search/tags"
-                config={{ ...DEFAULT_HEADER_CONFIG, initialQuery: q }}
-            />
+            <HeaderConfigPublisher path="/search/tags" config={DEFAULT_HEADER_CONFIG} />
+            <SearchControls controls={controls} />
             <PageContent>
-                <TagList result={result}/>
+                <TagList result={result} />
             </PageContent>
         </>
     );

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import type { Route } from "next";
-import type { Initiative } from "@/components/search/Search";
+import type { Initiative } from "@/lib/Search";
 import { FavoriteButton, MoreButton } from "@/components/search/CardActions";
 import EventPreview from "./EventPreview";
 
@@ -38,7 +38,9 @@ export default function InitiativeCard({ initiative }: { initiative: Initiative 
                 {name}
             </Link>
 
-            <p className="line-clamp-2 min-w-0 h-7 py-0.5 text-[clamp(8px,3.8cqw,13px)] leading-snug text-text-muted">{initiative.description}</p>
+            <p className="mt-0.5 h-[2.5em] min-w-0 overflow-hidden line-clamp-2 text-[clamp(8px,3.8cqw,13px)] leading-snug text-text-muted">
+                {initiative.description}
+            </p>
 
             {first && (
                 <div className="mt-[3cqw] flex h-[42cqw] gap-[2cqw]">
